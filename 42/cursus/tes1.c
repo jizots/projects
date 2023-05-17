@@ -2,55 +2,31 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <string.h>
+#include <locale.h>
 #include <stdlib.h>
 
-char	*power_point5_ary(char *result, size_t power)
+void	*ft_memchr(const void *s, int c, size_t n)
 {
-	int	i;
-	int	flag;
-	int	temp;
+	unsigned char	*str;
+	unsigned char	c1;
+	size_t			i;
 
-	if (power == 0)
-		return (result);
-	result[0] = '5';
-	result[1] = '\0';
-	if (power == 1)
-		return (result);
-	power--;
-	while (power--)
-	{
-		i = 0;
-		flag = 0;
-		while (result[i])
-		{
-			temp = (result[i] - '0');
-			if (flag == 1)
-			{
-				temp += 10;
-				flag = 0;
-			}
-			result[i] = (temp / 2) + '0';
-			if ((temp % 2) == 1)
-				flag = 1;
-			i++;
-		}
-		result[i] = '5';
-		result[i + 1] = '\0';
-	}
-	return (result);
+	if (n == 0)
+		return (NULL);
+	str = (unsigned char*)s;
+	c1 = (unsigned char)c;
+	i = 0;
+	while (str[i] != c1 && i < n)
+		i++;
+	if (i == n)
+		return (NULL);
+	else
+		return ((void*)&str[i]);
 }
 
+int main(void) {
+  char s1[] = "123ab\0 *cdef";
+  char c = '*';
 
-int main()
-{
-	char	num1[150] = "0009765625";
-	char	num2[150] = "00392625";
-	char	result[150];
-	t_ufloat	a;
-
-	a.value = 0.05;
-	printf("%f\n",a.value);
-	printf("%d\n",a.bit_float);
-
-	return 0;
+	printf("%s %s", (char*)memchr(s1, (int)c, 11), (char*)ft_memchr(s1, (int)c, 11));
 }

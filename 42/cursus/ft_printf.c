@@ -114,6 +114,6 @@ int main(void)
 
 	ft_printf("%s %d %c %s %f %pend\n", str, num, c, str, dnum, &dnum);
 	printf("%s %d %c %s %.49f %pend\n", str, num, c, str, dnum, &dnum);
-	ft_printf("%f %f\n", 8.0, 0.315);
+	ft_printf("%f %f\n", 9.0, 0.315);
 	return 0;
 }
