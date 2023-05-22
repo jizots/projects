@@ -1,41 +1,164 @@
-#include <stdio.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_split.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sotanaka <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/19 18:04:53 by sotanaka          #+#    #+#             */
+/*   Updated: 2023/05/19 18:26:28 by sotanaka         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-size_t	num_of_split(const char *s, char c, size_t *len_strmax)
+#include "libft.h"
+
+char	*ft_strtrim_forward(char const *s1, char const c)
+{
+	char	*start;
+	char	*end;
+	size_t	len_s1;
+	size_t	len_newstr;
+	char	*dest;
+	
+	start = (char *) s1;
+	len_s1 = ft_strlen(s1);
+	while (ft_memchr(start, c, len_s1) && start < &s1[len_s1])
+		start = ft_strchr(start, c) + 1;
+	if (start != s1)
+	{
+		end = start;
+		while (!(ft_strchr(end, c)) && end < &s1[len_s1])
+			end = ft_strchr(end, c) + 1;
+		len_newstr = (size_t)(end - start);
+	}
+	else
+		len_newstr = ft_strlen(start);
+	errno = 0;
+	dest = malloc (sizeof(char) * (len_newstr + 1));
+	if (dest == NULL)
+		return (dest);
+	ft_strlcpy (dest, start, len_newstr + 1);
+	return (dest);
+}
+
+size_t	num_of_split(const char *s, char c)
 {
 	int		i;
-	size_t	num_split;
-	size_t	len_temp;
+	size_t	size_split;
 
-	num_split = 0;
-	*len_strmax = 0;
-	while (s[i])
+	if (s == NULL)
+		return (0);
+	size_split = 0;
+	i = 0;
+	while (s[i] != '\0')
 	{
 		if (s[i] != c)
 		{
-			num_split++;
-			while(s[i] != c && s[i] != '\0')
-			{
+			size_split++;
+			while (s[i] != c && s[i] != '\0')
 				i++;
-				len_temp++;
-			}
-			if (*len_strmax < len_temp)
-				*len_strmax = len_temp;
 		}
 		else
-		{
-			while(s[i] == c && s[i] != '\0')
-			{
+			while (s[i] == c && s[i] != '\0')
 				i++;
-			}
-		}
 	}
+	return (size_split);
+}
+
+char	*ft_next_str(const char *s, char c)
+{
+	char	*next;
+	size_t	i;
+
+	i = 0;
+	if (!s)
+		return (NULL);
+	while (s[i] == c && s[i] != '\0')
+		i++;
+	while (s[i] != c && s[i] != '\0')
+		i++;
+	while (s[i] == c && s[i] != '\0')
+		i++;
+	next = (char *) &s[i];
+	return (next);
+}
+
+char	**ft_setsplit(const char *s, char c, char **box)
+{
+	size_t	i;
+	char	*start;
+	
+	i = 0;
+	start = (char *) s;
+	while (box[i] != NULL)
+	{
+		box[i] = ft_strtrim_forward(start, c);
+		if (box[i] == NULL)
+		{
+			while (i >= 0)
+				free(box[i--]);
+			free(box);
+			return (NULL);
+		}
+		i++;
+		start = ft_next_str(start, c);
+	}
+	return (box);
 }
 
 char	**ft_split(const char *s, char c)
 {
 	char	**box;
-	size_t	num_split;
-	size_t	len_strmax;
+	size_t	size_split;
 
-	num_split = num_of_split(s, c, &len_strmax);
+	if (s == NULL)
+		return (NULL);
+	size_split = num_of_split(s, c);
+	errno = 0;
+	box = malloc (sizeof(char *) * (size_split + 1));
+	if (box == NULL)
+		return (box);
+	box[size_split] = NULL;
+	box = ft_setsplit(s, c, box);
+	return (box);
+}
+
+int main()
+{
+	char	str1[]="hello,world,42,tokyo";
+	char	c = '{';
+	char	**box;
+	int		i, k;
+
+	box = ft_split(str1, c); //check str == NULL
+	if (box == NULL)
+	{
+		puts("error");
+		return (-1);
+	}
+	for (i = 0; box[i] != NULL; i++)
+	{
+		k = 0;
+		while (box[i][k] != '\0')
+			write (1, &box[i][k++], 1);
+		// puts("");
+	}
+	i = 0;
+	while (box[i] != NULL)
+		free(box[i++]);
+	free(box);
+
+	box = ft_split("hello world 42 tokyo", ' ');
+	for (i = 0; box[i] != NULL; i++)
+	{
+		k = 0;
+		while (box[i][k] != '\0')
+			write (1, &box[i][k++], 1);
+		puts("");
+	}
+	i = 0;
+	while (box[i] != NULL)
+		free(box[i++]);
+	free(box);
+	return (0);
 }
