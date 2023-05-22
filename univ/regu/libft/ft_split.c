@@ -22,13 +22,13 @@ char	*ft_strtrim_forward(char const *s1, char const c)
 	
 	start = (char *) s1;
 	len_s1 = ft_strlen(s1);
-	while (ft_memchr(start, c, len_s1) && start < &s1[len_s1])
-		start = ft_strchr(start, c) + 1;
-	if (start != s1)
+	while (ft_memchr(start, c, 1) && *start != '\0')
+		start += 1;
+	if (start != s1 || *end != '\0')
 	{
-		end = start;
-		while (!(ft_strchr(end, c)) && end < &s1[len_s1])
-			end = ft_strchr(end, c) + 1;
+		end = start + 1;
+		while (!(ft_memchr(end, c, 1)) && end != '\0')
+			end += 1;
 		len_newstr = (size_t)(end - start);
 	}
 	else
