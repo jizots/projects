@@ -1,164 +1,36 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_split.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: sotanaka <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/19 18:04:53 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/05/19 18:26:28 by sotanaka         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-#include "libft.h"
-
-char	*ft_strtrim_forward(char const *s1, char const c)
+typedef struct s_list
 {
-	char	*start;
-	char	*end;
-	size_t	len_s1;
-	size_t	len_newstr;
-	char	*dest;
-	
-	start = (char *) s1;
-	len_s1 = ft_strlen(s1);
-	while (ft_memchr(start, c, 1) && *start != '\0')
-		start += 1;
-	if (start != s1 || *end != '\0')
-	{
-		end = start + 1;
-		while (!(ft_memchr(end, c, 1)) && end != '\0')
-			end += 1;
-		len_newstr = (size_t)(end - start);
-	}
-	else
-		len_newstr = ft_strlen(start);
-	errno = 0;
-	dest = malloc (sizeof(char) * (len_newstr + 1));
-	if (dest == NULL)
-		return (dest);
-	ft_strlcpy (dest, start, len_newstr + 1);
-	return (dest);
+	void			*content;
+	struct s_list	*next;
+}	t_list;
+
+
+t_list	*ft_lstnew(void *content)
+{
+	t_list	*newlist;
+
+	newlist = malloc(sizeof(t_list) * 1);
+	if (newlist = NULL)
+		return (NULL);
+	newlist->content = content;
+	newlist->next = NULL;
+	return (newlist);
 }
 
-size_t	num_of_split(const char *s, char c)
+void	ft_lstadd_front(t_list **lst, t_list *new)
 {
-	int		i;
-	size_t	size_split;
+	new->next = *lst;
+	*lst = new;
+}
 
-	if (s == NULL)
+int	ft_lstsize(t_list *lst)
+{
+	int	value_return;
+
+	if (lst == NULL)
 		return (0);
-	size_split = 0;
-	i = 0;
-	while (s[i] != '\0')
-	{
-		if (s[i] != c)
-		{
-			size_split++;
-			while (s[i] != c && s[i] != '\0')
-				i++;
-		}
-		else
-			while (s[i] == c && s[i] != '\0')
-				i++;
-	}
-	return (size_split);
-}
-
-char	*ft_next_str(const char *s, char c)
-{
-	char	*next;
-	size_t	i;
-
-	i = 0;
-	if (!s)
-		return (NULL);
-	while (s[i] == c && s[i] != '\0')
-		i++;
-	while (s[i] != c && s[i] != '\0')
-		i++;
-	while (s[i] == c && s[i] != '\0')
-		i++;
-	next = (char *) &s[i];
-	return (next);
-}
-
-char	**ft_setsplit(const char *s, char c, char **box)
-{
-	size_t	i;
-	char	*start;
-	
-	i = 0;
-	start = (char *) s;
-	while (box[i] != NULL)
-	{
-		box[i] = ft_strtrim_forward(start, c);
-		if (box[i] == NULL)
-		{
-			while (i >= 0)
-				free(box[i--]);
-			free(box);
-			return (NULL);
-		}
-		i++;
-		start = ft_next_str(start, c);
-	}
-	return (box);
-}
-
-char	**ft_split(const char *s, char c)
-{
-	char	**box;
-	size_t	size_split;
-
-	if (s == NULL)
-		return (NULL);
-	size_split = num_of_split(s, c);
-	errno = 0;
-	box = malloc (sizeof(char *) * (size_split + 1));
-	if (box == NULL)
-		return (box);
-	box[size_split] = NULL;
-	box = ft_setsplit(s, c, box);
-	return (box);
-}
-
-int main()
-{
-	char	str1[]="hello,world,42,tokyo";
-	char	c = '{';
-	char	**box;
-	int		i, k;
-
-	box = ft_split(str1, c); //check str == NULL
-	if (box == NULL)
-	{
-		puts("error");
+	value_return = ft_lstsize(lst->next) + 1;
+	if (value_return < 0)
 		return (-1);
-	}
-	for (i = 0; box[i] != NULL; i++)
-	{
-		k = 0;
-		while (box[i][k] != '\0')
-			write (1, &box[i][k++], 1);
-		// puts("");
-	}
-	i = 0;
-	while (box[i] != NULL)
-		free(box[i++]);
-	free(box);
-
-	box = ft_split("hello world 42 tokyo", ' ');
-	for (i = 0; box[i] != NULL; i++)
-	{
-		k = 0;
-		while (box[i][k] != '\0')
-			write (1, &box[i][k++], 1);
-		puts("");
-	}
-	i = 0;
-	while (box[i] != NULL)
-		free(box[i++]);
-	free(box);
-	return (0);
+	return (value_return);
 }
