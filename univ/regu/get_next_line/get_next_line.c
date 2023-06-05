@@ -1,71 +1,79 @@
 #include "get_next_line.h"
 
-char	*ft_strjoin_to_newline(char *flag, char *buffer, char **str_save, int bytes_read)
+int	ft_strjoin_to_newline(char *buffer, char **str_save, int bytes_read, char **newline)
 {
+	char	*flag;
 	size_t	i_delimiter;
-	char	*newline;
 	char	*str_temp;
 
 	str_temp = *str_save;
 	if (bytes_read == 0)
 	{
+		flag = ft_memchr(*str_save, '\n', ft_strlen(*str_save));
 		buffer = *str_save;
 		i_delimiter = flag - &buffer[0];
-		newline = (char *) ft_calloc((i_delimiter + 1) + 1, sizeof(char));
-		if (newline == NULL)
-			return (NULL);
-		ft_strlcat(newline, buffer, (i_delimiter + 1) + 1);
+		*newline = (char *) ft_calloc((i_delimiter + 1) + 1, sizeof(char));
+		if (*newline == NULL)
+			return (-1);
+		ft_strlcat(*newline, buffer, (i_delimiter + 1) + 1);
 	}
 	else
 	{
+		flag = ft_memchr(buffer, '\n', bytes_read);
 		i_delimiter = flag - &buffer[0];
-		newline = (char *) ft_calloc(ft_strlen(str_temp) + (i_delimiter + 1) + 1, sizeof(char));
-		if (newline == NULL)
-			return (NULL);
-		ft_strlcat(newline, str_temp, ft_strlen(str_temp) + 1);
-		ft_strlcat(newline, buffer, ft_strlen(str_temp) + (i_delimiter + 1) + 1);
+		*newline = (char *) ft_calloc(ft_strlen(str_temp) + (i_delimiter + 1) + 1, sizeof(char));
+		if (*newline == NULL)
+			return (-1);
+		ft_strlcat(*newline, str_temp, ft_strlen(str_temp) + 1);
+		ft_strlcat(*newline, buffer, ft_strlen(str_temp) + (i_delimiter + 1) + 1);
 	}
 	*str_save = (char *) ft_calloc(ft_strlen(&buffer[i_delimiter + 1]) + 1, sizeof(char));
 	if (*str_save == NULL)
-		return (NULL);
+		return (-1);
 	if (ft_strlen(buffer) == (i_delimiter + 1))
 		*str_save = NULL;
 	else
 		ft_strlcat(*str_save, &buffer[i_delimiter + 1], ft_strlen(&buffer[i_delimiter + 1]) + 1);
 	free(str_temp);
-	return(newline);
+	return (0);
 }
 
-char	*ft_strjoin_all(char **str_save, int bytes_read, char *buffer)
+int	ft_strjoin_all(char **str_save, int bytes_read, char *buffer)
 {
 	char	*newline;
 
 	if (bytes_read == 0)
-		return (*str_save);
+		return (0);
 	newline = (char *) ft_calloc((ft_strlen(*str_save) + bytes_read + 1), sizeof(char));
 	if (newline == NULL)
-		return (NULL);
+		return (-1);
 	ft_strlcat(newline, *str_save, ft_strlen(*str_save) + 1);
 	ft_strlcat(newline, buffer, (ft_strlen(*str_save) + bytes_read + 1));
 	free(*str_save);
-	return (newline);
+	*str_save = newline;
+	return (0);
 }
 
-char	*ft_delimicheck_and_branch(char *buffer, const int bytes_read, char **str_save)
+int	ft_delimicheck_and_branch(char *buffer, const int bytes_read, char **str_save, char **newline)
 {
 	char	*flag;
-	char	*newline;
 
-	newline = NULL;
+	*newline = NULL;
 	if (bytes_read == 0)
 		flag = ft_memchr(*str_save, '\n', ft_strlen(*str_save));
 	else
 		flag = ft_memchr(buffer, '\n', bytes_read);
 	if (flag == NULL)
-		*str_save = ft_strjoin_all(str_save, bytes_read, buffer);
+	{
+		if (ft_strjoin_all(str_save, bytes_read, buffer) == -1)
+			return (-1);
+	}
 	else if (*flag == '\n')
-		newline = ft_strjoin_to_newline(flag, buffer, str_save, bytes_read);
-	return (newline);
+	{
+		if (ft_strjoin_to_newline(buffer, str_save, bytes_read, newline) == -1)
+			return (-1);
+	}
+	return (0);
 }
 
 char	*get_next_line(int fd)
@@ -81,7 +89,12 @@ char	*get_next_line(int fd)
 	buffer = NULL;
 	if (str_save != NULL)
 	{
-		newline = ft_delimicheck_and_branch(buffer, bytes_read, &str_save);
+		if (ft_delimicheck_and_branch(buffer, bytes_read, &str_save, &newline) == -1)
+		{
+			if (str_save != NULL)
+				free(str_save);
+			return (NULL);
+		}
 		if (newline != NULL)
 			return (newline);
 	}
@@ -102,7 +115,12 @@ char	*get_next_line(int fd)
 			}
 			return (NULL);
 		}
-		newline = ft_delimicheck_and_branch(buffer, bytes_read, &str_save);
+		if (ft_delimicheck_and_branch(buffer, bytes_read, &str_save, &newline) == -1)
+		{
+			if (str_save != NULL)
+				free(str_save);
+			return (NULL);
+		}
 		if (newline != NULL)
 		{
 			free(buffer);

@@ -12,7 +12,7 @@
 #include <stdio.h>
 
 //define
-#define SIZE_READ 5
+#define SIZE_READ 100
 
 //struct
 
