@@ -12,37 +12,41 @@ int	ft_inta_is_small(void *a, void *b)
 	return (-1);
 }
 
-int	ft_listcont_tof(t_list *list, int (*f)(void *, void *))
+size_t	ft_verifylist_byf(t_list *list, int (*f)(void *, void *))
 {
-	t_list	*next;
 	size_t	position;
 
 	if (list == NULL)
 		return (0);
-	position = 0;
-	while (next != NULL)
-	{
-		if ((*f)(list->content, list->next->content) == -1)
-			return (-1);
-		next = list->next;
-		position++;
-	}
-	return (position);
-}
-
-int	ft_iscircule(t_list *list)
-{
-	int		*n_root;
-	t_list	*next;
-
-	if (list == NULL)
-		return (-1);
-	n_root = (int *) list->content;
-	next = list->next;
+	position = 1;
 	while (list != NULL)
 	{
-		next = list->next;
-		if (next != NULL && ft_listcont_tof(list, ft_inta_is_small) != -1)
-
+		if ((*f)(list->content, list->next->content) == -1)
+			return (position);
+		list = list->next;
+		position++;
 	}
+	return (0);
+}
+
+size_t	ft_list_iscircule(t_list *list, size_t n_dif)
+{
+	while (n_dif > 1)
+	{
+		list = list->next;
+		n_dif--;
+	}
+	n_dif = ft_verifylist_byf(list, ft_inta_is_small);
+	if (n_dif != 0)
+		return (n_dif);
+	else
+		return (0)
+}
+
+size_t	ft_list_issorted(t_list *list)
+{
+	size_t	n_dif;
+
+	n_dif = ft_verifylist_byf(list, ft_inta_is_small);
+	return (n_dif);
 }
