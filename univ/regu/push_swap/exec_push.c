@@ -1,6 +1,6 @@
 #include "push_swap.h"
 
-void	ft_push(t_list *from, t_list *to, char *action)
+t_list	*ft_push(t_list *from, t_list *to, char *action)//befor verify
 {
 	t_list	*tmp_prev;
 	t_list	*tmp_next;
@@ -15,4 +15,5 @@ void	ft_push(t_list *from, t_list *to, char *action)
 	tmp_next->prev = tmp_prev;
 	write(1, action, 2);
 	write(1, '\n', 1);
+	return (from);//please change root node of from by another code.
 }
