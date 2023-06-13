@@ -22,7 +22,7 @@ t_list	*ft_swap_single(t_list *list, char *action)
 	return (sentinel->next);
 }
 
-void	ft_swap_double(t_list *lista, t_list *listb)
+void	ft_swap_double(t_list *lista, t_list *listb)//befor verify
 {
 	ft_swap_single(lista, NULL);
 	ft_swap_single(listb, NULL);

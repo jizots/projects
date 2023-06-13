@@ -1,29 +1,46 @@
 #include "push_swap.h"
 
+static void	ft_free_args(char **args)
+{
+	int	i;
+
+	i = 0;
+	while (args[i] != NULL)
+		free (args[i++]);
+	free (args);
+}
+
+static int	ft_put_error(void)
+{
+	write (1, "Error\n", 6);
+	return (-1);
+}
+
 int	main(int ac, char **av)
 {
-	t_list	*root;
+	t_list	*roota;
 
 	if (ac == 1)
 		return (0);
 	else if (ac == 2)
 	{
 		av = ft_split(av[1], ' ');//input error action
-		root = ft_make_initial_stack(av, root);
+		if (av == NULL)
+			return (-1);
+		roota = ft_make_initial_stack(av, roota);
 	}
 	else if (ac > 2)
-		root = ft_make_initial_stack(&av[1], root);
-	if (root == NULL)
-	{
-		write (1, "Error\n", 6);
-		return (-1);
-	}
-	root = ft_push_swap(root);
-while(root->content != NULL)
+		roota = ft_make_initial_stack(&av[1], roota);
+	if (ac == 2)
+		ft_free_args(av);
+	if (roota == NULL)
+		return (ft_put_error);
+	roota = ft_push_swap(roota);
+while(roota->content != NULL)
 {
-printf("->%d\n", *(int *)(root->content));
-root = root->next;
+printf("->%d\n", *(int *)(roota->content));
+roota = roota->next;
 }
-	ft_delete_datas(root);
+	ft_delete_datas(roota);
 	return (0);
 }
