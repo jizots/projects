@@ -16,15 +16,15 @@ t_list	*ft_rotate(t_list *list, char *action)//befor verify
 	if (action != NULL)
 	{
 		write(1, action, 2);
-		write(1, '\n', 1);
+		write(1, "\n", 1);
 	}
 	return (sentinel->next);
 }
 
 void	ft_rotate_double(t_list **lista, t_list **listb)//befor verify
 {
-	*lista = ft_rotate(lista, NULL);
-	*listb = ft_rotate(listb, NULL);
+	*lista = ft_rotate(*lista, NULL);
+	*listb = ft_rotate(*listb, NULL);
 	write(1, "rr\n", 3);
 }
 
@@ -34,7 +34,7 @@ t_list	*ft_r_rotate(t_list *list, char *action)//befor verify
 	t_list	*sentinel;
 
 	if (ft_lstsize(list) == 2)
-		list->next = sentinel;
+		list->next = list->prev;
 	newroot = list->prev->prev;
 	sentinel = list->prev;
 	sentinel->prev = newroot->prev;
@@ -45,15 +45,15 @@ t_list	*ft_r_rotate(t_list *list, char *action)//befor verify
 	list->prev = newroot;
 	if (action != NULL)
 	{
-		write(1, action, 2);
-		write(1, '\n', 1);
+		write(1, action, 3);
+		write(1, "\n", 1);
 	}
 	return (newroot);
 }
 
 void	ft_r_rotate_double(t_list **lista, t_list **listb)//befor verify
 {
-	*lista = ft_r_rotate(lista, NULL);
-	*listb = ft_r_rotate(listb, NULL);
+	*lista = ft_r_rotate(*lista, NULL);
+	*listb = ft_r_rotate(*listb, NULL);
 	write(1, "rr\n", 3);
 }

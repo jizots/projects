@@ -27,18 +27,18 @@ int	main(int ac, char **av)
 		av = ft_split(av[1], ' ');//input error action
 		if (av == NULL)
 			return (-1);
-		roota = ft_make_initial_stack(av, roota);
+		roota = ft_make_initial_stack(av);
 	}
-	else if (ac > 2)
-		roota = ft_make_initial_stack(&av[1], roota);
+	else
+		roota = ft_make_initial_stack(&av[1]);
 	if (ac == 2)
 		ft_free_args(av);
 	if (roota == NULL)
-		return (ft_put_error);
+		return (ft_put_error());
 	roota = ft_push_swap(roota);
-while(roota->content != NULL)
+while(roota->cont != NULL)
 {
-printf("->%d\n", *(int *)(roota->content));
+printf("->%d\n", *(int *)(roota->cont));
 roota = roota->next;
 }
 	ft_delete_datas(roota);

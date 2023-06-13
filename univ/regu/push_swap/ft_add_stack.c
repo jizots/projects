@@ -1,13 +1,13 @@
 #include "push_swap.h"
 
-static t_list	*ft_create_stack(void *content, t_list *prev, t_list *next)
+static t_list	*ft_create_stack(void *cont, t_list *prev, t_list *next)
 {
 	t_list	*new;
 
 	new = malloc (sizeof(t_list) * 1);
 	if (new == NULL)
 		return (NULL);
-	new->content = content;
+	new->cont = cont;
 	new->prev = prev;
 	new->next = next;
 	return (new);
@@ -19,7 +19,7 @@ static t_list	*ft_add_effective_stack(t_list *stack, int *value)
 	t_list	*new;
 
 	last = stack;
-	while (last->next->content != NULL)
+	while (last->next->cont != NULL)
 		last = last->next;
 	new = ft_create_stack((void *) value, last, last->next);
 	if (new == NULL)
