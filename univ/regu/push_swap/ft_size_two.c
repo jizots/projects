@@ -1,15 +1,15 @@
 #include "push_swap.h"
 
-t_list	*ft_size_two_a(t_list *roota)
+t_list	*ft_size_two_a(t_list *sta)
 {
-	if (ft_ascending_sorted(roota) != 0)
-		roota = ft_swap_single(roota, "sa");
-	return (roota);	
+	if (ft_ascending_sorted(sta) != 0)
+		sta = ft_swap_single(sta, "sa");
+	return (sta);	
 }
 
-t_list	*ft_size_two_b(t_list *rootb)
+t_list	*ft_size_two_b(t_list *stb)
 {
-	if (ft_descending_sorted(rootb) != 0)
-		rootb = ft_swap_single(rootb, "sb");
-	return (rootb);	
+	if (ft_descending_sorted(stb) != 0)
+		stb = ft_swap_single(stb, "sb");
+	return (stb);	
 }

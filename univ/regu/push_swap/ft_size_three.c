@@ -1,41 +1,43 @@
 #include "push_swap.h"
 
-t_list	*ft_size_three_a(t_list *ra)
+t_list	*ft_size_three_a(t_list *sta)
 {
+puts("three a");
 	int vl[3];
 
-	vl[0] = *(ra->cont);
-	vl[1] = *(ra->next->cont);
-	vl[2] = *(ra->next->next->cont);
-	if (ft_ascending_sorted(ra) == 0)
-		return (ra);
+	vl[0] = *(sta->cont);
+	vl[1] = *(sta->next->cont);
+	vl[2] = *(sta->next->next->cont);
+	if (ft_ascending_sorted(sta) == 0)
+		return (sta);
 	if ((vl[0] < vl[1] && vl[0] < vl[2] && vl[1] > vl[2])
 		|| (vl[0] > vl[1] && vl[0] < vl[2] && vl[1] < vl[2])
-			|| (ft_descending_sorted(ra) == 0))
-		ra = ft_swap_single(ra, "sa");
+			|| (ft_descending_sorted(sta) == 0))
+		sta = ft_swap_single(sta, "sa");
 	if (vl[0] < vl[1] && vl[0] > vl[2] && vl[1] > vl[2])
-		ra = ft_r_rotate(ra, "rra");
+		sta = ft_r_rotate(sta, "rra");
 	else if (vl[0] > vl[1] && vl[0] > vl[2] && vl[1] < vl[2])
-		ra = ft_rotate(ra, "ra");
-	return (ft_size_three_a(ra));
+		sta = ft_rotate(sta, "ra");
+	return (ft_size_three_a(sta));
 }
 
-t_list	*ft_size_three_b(t_list *rb)
+t_list	*ft_size_three_b(t_list *stb)
 {
+puts("three b");
 	int vl[3];
 
-	vl[0] = *(rb->cont);
-	vl[1] = *(rb->next->cont);
-	vl[2] = *(rb->next->next->cont);
-	if (ft_descending_sorted(rb) == 0)
-		return (rb);
-	if ((vl[0] < vl[1] && vl[0] < vl[2] && vl[1] < vl[2])
+	vl[0] = *(stb->cont);
+	vl[1] = *(stb->next->cont);
+	vl[2] = *(stb->next->next->cont);
+	if (ft_descending_sorted(stb) == 0)
+		return (stb);
+	if ((vl[0] < vl[1] && vl[0] > vl[2] && vl[1] > vl[2])
 		|| (vl[0] > vl[1] && vl[0] > vl[2] && vl[1] < vl[2])
-			|| (ft_ascending_sorted(rb) == 0))
-		rb = ft_swap_single(rb, "sb");
+			|| (ft_ascending_sorted(stb) == 0))
+		stb = ft_swap_single(stb, "sb");
 	if (vl[0] > vl[1] && vl[0] < vl[2] && vl[1] < vl[2])
-		rb = ft_r_rotate(rb, "rrb");
+		stb = ft_r_rotate(stb, "rrb");
 	else if (vl[0] < vl[1] && vl[0] < vl[2] && vl[1] > vl[2])
-		rb = ft_rotate(rb, "rb");
-	return (ft_size_three_b(rb));
+		stb = ft_rotate(stb, "rb");
+	return (ft_size_three_b(stb));
 }

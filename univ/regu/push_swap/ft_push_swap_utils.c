@@ -38,3 +38,25 @@ size_t	ft_locate_minimum(t_list *root)
 	}
 	return (locate);
 }
+
+size_t	ft_locate_maximum(t_list *root)
+{
+	int		max;
+	size_t	locate;
+	size_t	i;
+
+	max = *(root->cont);
+	locate = 0;
+	i = 0;
+	while (root->cont != NULL)
+	{
+		if (max < *(root->cont))
+		{
+			max = *(root->cont);
+			locate = i;
+		}
+		root = root->next;
+		i++;
+	}
+	return (locate);
+}

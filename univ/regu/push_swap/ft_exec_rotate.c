@@ -1,6 +1,6 @@
 #include "push_swap.h"
 
-t_list	*ft_rotate(t_list *list, char *action)//befor verify
+t_list	*ft_rotate(t_list *list, char *action)
 {
 	t_list	*newroot;
 	t_list	*sentinel;
@@ -21,14 +21,14 @@ t_list	*ft_rotate(t_list *list, char *action)//befor verify
 	return (sentinel->next);
 }
 
-void	ft_rotate_double(t_list **lista, t_list **listb)//befor verify
+void	ft_rotate_double(t_list **lista, t_list **listb)
 {
 	*lista = ft_rotate(*lista, NULL);
 	*listb = ft_rotate(*listb, NULL);
 	write(1, "rr\n", 3);
 }
 
-t_list	*ft_r_rotate(t_list *list, char *action)//befor verify
+t_list	*ft_r_rotate(t_list *list, char *action)
 {
 	t_list	*newroot;
 	t_list	*sentinel;
@@ -51,7 +51,7 @@ t_list	*ft_r_rotate(t_list *list, char *action)//befor verify
 	return (newroot);
 }
 
-void	ft_r_rotate_double(t_list **lista, t_list **listb)//befor verify
+void	ft_r_rotate_double(t_list **lista, t_list **listb)
 {
 	*lista = ft_r_rotate(*lista, NULL);
 	*listb = ft_r_rotate(*listb, NULL);

@@ -24,7 +24,7 @@ int	main(int ac, char **av)
 		return (0);
 	else if (ac == 2)
 	{
-		av = ft_split(av[1], ' ');//input error action
+		av = ft_split(av[1], ' ');
 		if (av == NULL)
 			return (-1);
 		roota = ft_make_initial_stack(av);
@@ -36,10 +36,10 @@ int	main(int ac, char **av)
 	if (roota == NULL)
 		return (ft_put_error());
 	roota = ft_push_swap(roota);
-while(roota->cont != NULL)
+for (t_list *tmp = roota; tmp->cont != NULL; tmp = tmp->next)
 {
-printf("->%d\n", *(int *)(roota->cont));
-roota = roota->next;
+puts("3");
+printf("->%d\n", *(tmp->cont));
 }
 	ft_delete_datas(roota);
 	return (0);
