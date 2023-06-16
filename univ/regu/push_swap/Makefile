@@ -12,17 +12,14 @@ SCRC	=	main.c\
 	ft_exec_rotate_repeat.c\
 	ft_exec_swap.c\
 	ft_make_initial_list.c\
-	ft_memchr.c\
 	ft_push_swap.c\
 	ft_push_swap_utils.c\
-	ft_size_three.c\
+	ft_size_under_three.c\
 	ft_size_over_six.c\
 	ft_size_five.c\
 	ft_size_four.c\
-	ft_size_two.c\
 	ft_split.c\
 	ft_strlcpy.c\
-	ft_strlen.c\
 
 OBJS	=	$(SCRC:%.c=%.o)
 

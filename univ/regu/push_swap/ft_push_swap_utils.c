@@ -60,3 +60,47 @@ size_t	ft_locate_maximum(t_list *root)
 	}
 	return (locate);
 }
+
+void	ft_sort_int_exec(char *list_int, size_t size_list)
+{
+	size_t	i;
+	size_t	j;
+	int		tmp;
+
+	i = 0;
+	while (i < size_list - 1)
+	{
+		j = i + 1;
+		while (j < size_list)
+		{
+			if (list_int[i] > list_int[j])
+			{
+				tmp = list_int[i];
+				list_int[i] = list_int[j];
+				list_int[j] = tmp;
+			}
+			j++;
+		}
+		i++;
+	}
+}
+
+char	*ft_sort_int(t_list *list)
+{
+	char	*list_int;
+	size_t	i;
+	size_t	size_list;
+
+	size_list = ft_lstsize(list);
+	list_int = malloc(sizeof(int) * size_list);
+	if (list_int == NULL)
+		return (NULL);
+	i = 0;
+	while (list->cont != NULL)
+	{
+		list_int[i++] = *(list->cont);
+		list = list->next;
+	}
+	ft_sort_int_exec(list_int, size_list);
+	return (list_int);
+}

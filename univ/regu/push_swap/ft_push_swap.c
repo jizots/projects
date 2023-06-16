@@ -31,7 +31,7 @@ t_list	*ft_push_swap(t_list *sta)
 	else if (size_stack == 5)
 		sta = ft_size_five_a(sta, stb);
 	else
-		return (ft_size_over_six(sta, stb, 0));
+		return (ft_size_over_six(sta, stb, size_stack));
 	free (stb);
 	return (sta);
 }

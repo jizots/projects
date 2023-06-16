@@ -28,3 +28,32 @@ size_t	ft_strlcpy(char *dest, const char *src, size_t size)
 	}
 	return (ft_strlen(src));
 }
+
+size_t	ft_strlen(const char *str)
+{
+	size_t	count;
+
+	count = 0;
+	while (str[count])
+		count++;
+	return (count);
+}
+
+void	*ft_memchr(const void *s, int c, size_t n)
+{
+	unsigned char	*str;
+	unsigned char	c1;
+	size_t			i;
+
+	str = (unsigned char *) s;
+	c1 = (unsigned char) c;
+	if (n == 0 || s == NULL)
+		return (NULL);
+	i = 0;
+	while (i < n && str[i] != c1)
+		i++;
+	if (i == n)
+		return (NULL);
+	else
+		return ((void *) &str[i]);
+}
