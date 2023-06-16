@@ -17,6 +17,7 @@ t_list	*ft_rotate_repeat(t_list *st, char *action, char *r_action, size_t nor)
 		while ((size_stack - nor++) > 0)
 			st = ft_r_rotate(st, r_action);
 	}
+// puts("->>>rotate repeat<<<-");printf_list(st);
 	return (st);
 }
 

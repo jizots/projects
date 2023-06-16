@@ -18,12 +18,6 @@ void	ft_push(t_list **from, t_list **to, char *action)
 	write(1, action, 2);
 	write(1, "\n", 1);
 
-for(t_list *tmp = *from; tmp->cont != NULL; tmp = tmp->next)
-{
-printf("from->%d\n", *(tmp->cont));
-}
-for(t_list *tmp = *to; tmp->cont != NULL; tmp = tmp->next)
-{
-printf("to->%d\n", *(tmp->cont));
-}
+// puts("->>>from<<<-");printf_list(*from);
+// puts("->>>to<<<-");printf_list(*to);
 }

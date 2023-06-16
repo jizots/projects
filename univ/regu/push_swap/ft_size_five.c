@@ -2,7 +2,7 @@
 
 t_list	*ft_size_five_a(t_list *sta, t_list *stb)
 {
-puts("size five");
+// puts("size five");
 	size_t	locate_min;
 
 	if (ft_ascending_sorted(sta) == 0)

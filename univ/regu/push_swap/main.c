@@ -1,5 +1,11 @@
 #include "push_swap.h"
 
+void printf_list(t_list *list)
+{
+	for (t_list *tmp = list; tmp->cont != NULL; tmp = tmp->next)
+		printf("->%d\n", *(tmp->cont));
+}
+
 static void	ft_free_args(char **args)
 {
 	int	i;
@@ -10,8 +16,10 @@ static void	ft_free_args(char **args)
 	free (args);
 }
 
-static int	ft_put_error(void)
+static int	ft_put_error(t_list *root)
 {
+	if (root != NULL)
+		ft_delete_datas(root);
 	write (1, "Error\n", 6);
 	return (-1);
 }
@@ -33,14 +41,10 @@ int	main(int ac, char **av)
 		roota = ft_make_initial_stack(&av[1]);
 	if (ac == 2)
 		ft_free_args(av);
-	if (roota == NULL)
-		return (ft_put_error());
+	if (roota == NULL || ft_lstsize(roota) == 1)
+		return (ft_put_error(roota));
 	roota = ft_push_swap(roota);
-for (t_list *tmp = roota; tmp->cont != NULL; tmp = tmp->next)
-{
-puts("3");
-printf("->%d\n", *(tmp->cont));
-}
+printf_list(roota);
 	ft_delete_datas(roota);
 	return (0);
 }

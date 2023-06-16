@@ -2,7 +2,7 @@
 
 t_list	*ft_size_three_a(t_list *sta)
 {
-puts("three a");
+// puts("three a");
 	int vl[3];
 
 	vl[0] = *(sta->cont);
@@ -23,7 +23,7 @@ puts("three a");
 
 t_list	*ft_size_three_b(t_list *stb)
 {
-puts("three b");
+// puts("three b");
 	int vl[3];
 
 	vl[0] = *(stb->cont);

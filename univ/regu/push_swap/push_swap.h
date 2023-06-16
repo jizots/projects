@@ -55,4 +55,7 @@ void	ft_r_rotate_double(t_list **lista, t_list **listb);
 t_list	*ft_rotate_repeat(t_list *st, char *action, char *r_action, size_t nor);
 void	ft_push(t_list **from, t_list **to, char *action);
 
+void printf_list(t_list *list);
+
+
 #endif

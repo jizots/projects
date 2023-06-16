@@ -8,6 +8,19 @@ static t_list	*ft_fail_value(t_list *root, int *p_value)
 	return (NULL);
 }
 
+int	ft_check_duplicate(t_list *stack, int value)
+{
+	if (stack == NULL)
+		return (0);
+	while (stack->cont != NULL)
+	{
+		if (*(stack->cont) == value)
+			return (-1);
+		stack = stack->next;
+	}
+	return (0);
+}
+
 t_list	*ft_make_initial_stack(char **args)
 {
 	int		i;
@@ -27,7 +40,7 @@ t_list	*ft_make_initial_stack(char **args)
 		}
 		flag_error = args[i];
 		*p_value = ft_atoi(args[i++], &flag_error);
-		if (flag_error == NULL)
+		if (flag_error == NULL || ft_check_duplicate(root, *p_value) == -1)
 			return (ft_fail_value(root, p_value));
 		root = ft_add_stack(root, p_value);
 	}
