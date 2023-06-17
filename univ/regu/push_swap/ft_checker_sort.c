@@ -2,19 +2,17 @@
 
 int	ft_inta_is_small(int *a, int *b)
 {
-// puts("a is s");
 	if (b == NULL || *a < *b)
 		return (0);
-// printf("%d %d\n", *a, *b);
 	return (-1);
 }
 
 int	ft_intb_is_small(int *a, int *b)
 {
-// puts("b is s");
+if (b != NULL)
+printf("a %d, b %d\n", *a, *b);
 	if (b == NULL || *b < *a)
 		return (0);
-// printf("%d %d\n", *a, *b);
 	return (-1);
 }
 
@@ -40,7 +38,6 @@ size_t	ft_ascending_sorted(t_list *list)
 	size_t	n_dif;
 
 	n_dif = ft_verifylist_byf(list, ft_inta_is_small);
-// printf("ndif %zu\n", n_dif);
 	return (n_dif);
 }
 

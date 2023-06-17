@@ -19,7 +19,7 @@ SCRC	=	main.c\
 	ft_size_five.c\
 	ft_size_four.c\
 	ft_split.c\
-	ft_strlcpy.c\
+	ft_strlib.c\
 
 OBJS	=	$(SCRC:%.c=%.o)
 

@@ -16,7 +16,6 @@ t_list	*ft_size_two_b(t_list *stb)
 
 t_list	*ft_size_three_a(t_list *sta)
 {
-// puts("three a");
 	int vl[3];
 
 	vl[0] = *(sta->cont);
@@ -37,7 +36,6 @@ t_list	*ft_size_three_a(t_list *sta)
 
 t_list	*ft_size_three_b(t_list *stb)
 {
-// puts("three b");
 	int vl[3];
 
 	vl[0] = *(stb->cont);

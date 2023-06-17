@@ -65,10 +65,12 @@ void	ft_push_tob_all(t_list **sta, t_list **stb, int *list_int, size_t size_stac
 		ft_simple_swap(sta, stb);
 // printf("cont %d\n", *((*sta)->cont));
 // printf("listint %d<->%d\n", list_int[0], list_int[5+i]);
-		if (list_int[0] <= *((*sta)->cont) && *((*sta)->cont) <= list_int[27 + i]) //100->10 , 500->27
+		if (list_int[0] <= *((*sta)->cont) && *((*sta)->cont) <= list_int[10 + i]) //100->10 , 500->27
 		{
 			ft_push(sta, stb, "pb");
-			if (i < (size_stack - 28))//100->11 , 500->28
+			if (list_int[7 + i] <= *((*stb)->cont))
+				*stb = ft_rotate(*stb, "rb");
+			if (i < (size_stack - 11))//100->11 , 500->28
 				i++;
 		}
 		else
@@ -80,21 +82,54 @@ void	ft_push_tob_all(t_list **sta, t_list **stb, int *list_int, size_t size_stac
 	}
 }
 
+size_t	ft_times_ratato(size_t locate_max, size_t locate_minus, size_t size_stack)
+{
+	size_t	times_rotate;
+
+		if (locate_minus > (size_stack / 2) && locate_max > (size_stack / 2)
+			&& locate_max > locate_minus)
+			times_rotate = locate_max;
+		else if (locate_minus > (size_stack / 2) && locate_max > (size_stack / 2))
+			times_rotate = locate_minus;
+		else if (locate_minus <= (size_stack / 2) && locate_max > (size_stack / 2)
+			&& (size_stack - locate_max) < locate_minus)
+			times_rotate = locate_max;
+		else if (locate_minus <= (size_stack / 2) && locate_max > (size_stack / 2))
+			times_rotate = locate_minus;
+		else if (locate_minus > (size_stack / 2) && locate_max <= (size_stack / 2)
+			&& locate_max < (size_stack - locate_minus))
+			times_rotate = locate_max;
+		else if (locate_minus > (size_stack / 2) && locate_max <= (size_stack / 2))
+			times_rotate = locate_minus;
+		else if (locate_max < locate_minus)
+			times_rotate = locate_max;
+		else
+			times_rotate = locate_minus;
+		return (times_rotate);
+}
+
 void	ft_push_toa_all(t_list **sta, t_list **stb, int *list_int, size_t size_stack)
 {
 	size_t	locate_minus;
 	size_t	locate_max;
-	
+	size_t	times_rotate;
+
 	while ((*stb)->cont != NULL)
 	{
-		locate_max = ft_locate_specify(stb, list_int[size_stack - 1]);
+		locate_max = ft_locate_specify(*stb, list_int[size_stack - 1]);
 		if (size_stack > 1)
-			locate_minus = ft_locate_specify(stb, list_int[size_stack - 2]);
-		if (locate_minus > size_stack / 2)
-
+			locate_minus = ft_locate_specify(*stb, list_int[size_stack - 2]);
+		times_rotate = ft_times_ratato(locate_max, locate_minus, size_stack);
+		*stb = ft_rotate_repeat(*stb, "rb", "rrb", times_rotate);
+		ft_push(stb, sta, "pa");
 		*stb = ft_rotate_repeat(*stb, "rb", "rrb", ft_locate_maximum(*stb));
 		ft_push(stb, sta, "pa");
-		size_stack--;
+		ft_simple_swap(sta, stb);
+		size_stack -= 2;
+puts("---> a <---");
+printf_list(*sta);
+puts("---> b <---");
+printf_list(*stb);
 	}
 }
 

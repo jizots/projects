@@ -44,7 +44,7 @@ int	main(int ac, char **av)
 	if (roota == NULL || ft_lstsize(roota) == 1)
 		return (ft_put_error(roota));
 	roota = ft_push_swap(roota);
-// printf_list(roota);
+printf_list(roota);
 	ft_delete_datas(roota);
 	return (0);
 }
