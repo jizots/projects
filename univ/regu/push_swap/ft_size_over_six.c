@@ -5,7 +5,7 @@
 // 	size_t	size_sta;
 // 	size_t	size_stb;
 
-// // puts("under six");
+// puts("under six");
 // 	size_sta = ft_lstsize(*sta);
 // 	size_stb = ft_lstsize(*stb);
 // 	if (size_sta == 5)
@@ -28,8 +28,9 @@
 
 static void	ft_simple_swap(t_list **sta, t_list **stb)
 {
-// puts("simple");
-	if ((*sta)->cont != NULL && (*stb)->cont != NULL && ft_inta_is_small((*sta)->cont, (*stb)->cont) == -1 && ft_intb_is_small((*sta)->cont, (*stb)->cont) == -1)
+	if ((*sta)->cont != NULL && (*stb)->cont != NULL &&
+		ft_inta_is_small((*sta)->cont, (*sta)->next->cont) == -1 &&
+			ft_intb_is_small((*stb)->cont, (*stb)->next->cont) == -1)
 		ft_swap_double(sta, stb);
 	else if ((*sta)->cont != NULL && ft_inta_is_small((*sta)->cont, (*sta)->next->cont) == -1)
 		*sta = ft_swap_single(*sta, "sa");
@@ -42,6 +43,8 @@ size_t	ft_locate_specify(t_list *list, int specify)
 {
 	size_t	i;
 
+	if (list->cont == NULL)
+		return (0);
 	i = 0;
 	while (*(list->cont) != specify)
 	{
@@ -51,17 +54,47 @@ size_t	ft_locate_specify(t_list *list, int specify)
 	return (i);
 }
 
-void	ft_push_b_all(t_list *sta, t_list *stb, int median, int *list_int)
+void	ft_push_tob_all(t_list **sta, t_list **stb, int *list_int, size_t size_stack)
 {
-	size_t	small;
-	size_t	big;
+	size_t	i;
 
-	while (sta->cont != NULL)
+	i = 0;
+	while ((*sta)->cont != NULL)
 	{
-		if (list_int[median + 1 + small] < *(sta->cont) < list_int[median + 2 + small])
+		// ft_sort_under_six(sta, stb);
+		ft_simple_swap(sta, stb);
+// printf("cont %d\n", *((*sta)->cont));
+// printf("listint %d<->%d\n", list_int[0], list_int[5+i]);
+		if (list_int[0] <= *((*sta)->cont) && *((*sta)->cont) <= list_int[27 + i]) //100->10 , 500->27
 		{
-			ft_
+			ft_push(sta, stb, "pb");
+			if (i < (size_stack - 28))//100->11 , 500->28
+				i++;
 		}
+		else
+			*sta = ft_rotate(*sta, "ra");
+// puts("---> a <---");
+// printf_list(*sta);
+// puts("---> b <---");
+// printf_list(*stb);
+	}
+}
+
+void	ft_push_toa_all(t_list **sta, t_list **stb, int *list_int, size_t size_stack)
+{
+	size_t	locate_minus;
+	size_t	locate_max;
+	
+	while ((*stb)->cont != NULL)
+	{
+		locate_max = ft_locate_specify(stb, list_int[size_stack - 1]);
+		if (size_stack > 1)
+			locate_minus = ft_locate_specify(stb, list_int[size_stack - 2]);
+		if (locate_minus > size_stack / 2)
+
+		*stb = ft_rotate_repeat(*stb, "rb", "rrb", ft_locate_maximum(*stb));
+		ft_push(stb, sta, "pa");
+		size_stack--;
 	}
 }
 
@@ -72,20 +105,7 @@ t_list	*ft_size_over_six(t_list *sta, t_list *stb, size_t size_stack)
 	if (ft_ascending_sorted(sta) == 0 && stb->cont == NULL)
 		return (sta);
 	list_int = ft_sort_int(sta);
-	ft_push_b_all(sta, stb, list_int[size_stack / 2], list_int);
-	// ft_sort_under_six(&sta, &stb);
-	// ft_simple_swap(&sta, &stb);
-	// if (ave < *(sta->cont))
-	// 	ft_push(&sta, &stb, "pa");
-	// else
-	// 	sta = ft_rotate(sta, "ra");
-	// if (sta->cont == NULL)
-	// 	flag = 1;
-	// else if (stb->cont == NULL)
-	// 	flag = 0;
-	// if (sta->cont != NULL && flag == 0)
-	// 	ft_push(&sta, &stb, "pb");
-	// else if (stb->cont != NULL && flag == 1)
-	// 	ft_push(&stb, &sta, "pa");
-	return (ft_size_over_six(sta, stb, size_stack));
+	ft_push_tob_all(&sta, &stb, list_int, size_stack);
+	ft_push_toa_all(&sta, &stb, list_int, size_stack);
+	return (sta);
 }

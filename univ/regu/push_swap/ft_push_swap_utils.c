@@ -61,7 +61,7 @@ size_t	ft_locate_maximum(t_list *root)
 	return (locate);
 }
 
-void	ft_sort_int_exec(char *list_int, size_t size_list)
+void	ft_sort_int_exec(int *list_int, size_t size_list)
 {
 	size_t	i;
 	size_t	j;
@@ -85,9 +85,9 @@ void	ft_sort_int_exec(char *list_int, size_t size_list)
 	}
 }
 
-char	*ft_sort_int(t_list *list)
+int	*ft_sort_int(t_list *list)
 {
-	char	*list_int;
+	int		*list_int;
 	size_t	i;
 	size_t	size_list;
 

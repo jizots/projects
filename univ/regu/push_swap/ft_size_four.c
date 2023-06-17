@@ -2,6 +2,7 @@
 
 t_list	*ft_size_four_a(t_list *sta, t_list *stb)
 {
+// puts("size four a");
 	size_t	locate_min;
 
 	if (ft_ascending_sorted(sta) == 0)
@@ -19,6 +20,7 @@ t_list	*ft_size_four_a(t_list *sta, t_list *stb)
 
 t_list	*ft_size_four_b(t_list *sta, t_list *stb)
 {
+// puts("size four b");
 	size_t	locate_max;
 
 	if (ft_descending_sorted(stb) == 0)
