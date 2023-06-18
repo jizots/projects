@@ -1,8 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_size_four.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sotanaka <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/18 19:55:49 by sotanaka          #+#    #+#             */
+/*   Updated: 2023/06/18 19:55:51 by sotanaka         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
 t_list	*ft_size_four_a(t_list *sta, t_list *stb)
 {
-// puts("size four a");
 	size_t	locate_min;
 
 	if (ft_ascending_sorted(sta) == 0)
@@ -20,7 +31,6 @@ t_list	*ft_size_four_a(t_list *sta, t_list *stb)
 
 t_list	*ft_size_four_b(t_list *sta, t_list *stb)
 {
-// puts("size four b");
 	size_t	locate_max;
 
 	if (ft_descending_sorted(stb) == 0)

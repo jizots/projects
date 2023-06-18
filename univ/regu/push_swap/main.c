@@ -1,10 +1,16 @@
-#include "push_swap.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sotanaka <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/18 19:56:39 by sotanaka          #+#    #+#             */
+/*   Updated: 2023/06/18 19:56:41 by sotanaka         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-void printf_list(t_list *list)
-{
-	for (t_list *tmp = list; tmp->cont != NULL; tmp = tmp->next)
-		printf("->%d\n", *(tmp->cont));
-}
+#include "push_swap.h"
 
 static void	ft_free_args(char **args)
 {
@@ -16,7 +22,22 @@ static void	ft_free_args(char **args)
 	free (args);
 }
 
-static int	ft_put_error(t_list *root)
+void	ft_delete_datas(t_list *stack)
+{
+	t_list	*next;
+
+	next = stack->next;
+	while (stack->cont != NULL)
+	{
+		next = stack->next;
+		free (stack->cont);
+		free (stack);
+		stack = next;
+	}
+	free (next);
+}
+
+int	ft_put_error(t_list *root)
 {
 	if (root != NULL)
 		ft_delete_datas(root);
@@ -44,7 +65,8 @@ int	main(int ac, char **av)
 	if (roota == NULL || ft_lstsize(roota) == 1)
 		return (ft_put_error(roota));
 	roota = ft_push_swap(roota);
-printf_list(roota);
+	if (roota == NULL)
+		return (-1);
 	ft_delete_datas(roota);
 	return (0);
 }

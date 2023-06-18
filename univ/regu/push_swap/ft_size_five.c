@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_size_five.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sotanaka <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/18 19:55:39 by sotanaka          #+#    #+#             */
+/*   Updated: 2023/06/18 19:55:42 by sotanaka         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
 t_list	*ft_size_five_a(t_list *sta, t_list *stb)
 {
-puts("size five");
+// puts("size five");
 	size_t	locate_min;
 
 	if (ft_ascending_sorted(sta) == 0)
@@ -20,6 +32,7 @@ puts("size five");
 
 t_list	*ft_size_five_b(t_list *sta, t_list *stb)
 {
+// puts("size five b");
 	size_t	locate_max;
 
 	if (ft_descending_sorted(stb) == 0)

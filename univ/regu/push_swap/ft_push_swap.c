@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_push_swap.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sotanaka <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/18 19:55:17 by sotanaka          #+#    #+#             */
+/*   Updated: 2023/06/18 19:55:19 by sotanaka         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
 static t_list	*ft_create_bstack()
@@ -19,6 +31,11 @@ t_list	*ft_push_swap(t_list *sta)
 	t_list	*stb;
 
 	stb = ft_create_bstack();
+	if (stb == NULL)
+	{
+		ft_put_error(sta);
+		return (NULL);
+	}
 	size_stack = ft_lstsize(sta);
 	if (size_stack == 1)
 		return (sta);
@@ -31,7 +48,7 @@ t_list	*ft_push_swap(t_list *sta)
 	else if (size_stack == 5)
 		sta = ft_size_five_a(sta, stb);
 	else
-		return (ft_size_over_six(sta, stb, size_stack));
-	free (stb);
+		sta = ft_size_over_six(sta, stb, size_stack);
+	ft_delete_datas(stb);
 	return (sta);
 }

@@ -19,6 +19,7 @@ typedef struct s_list
 }	t_list;
 
 //prototype
+int		ft_put_error(t_list *root);
 char	**ft_split(const char *, char);
 void	*ft_memchr(const void *s, int c, size_t n);
 size_t	ft_strlcpy(char *dest, const char *src, size_t size);
@@ -49,14 +50,10 @@ size_t	ft_ascending_circle(t_list *root);
 size_t	ft_descending_circle(t_list *root);
 t_list	*ft_swap_single(t_list *list, char *action);
 void	ft_swap_double(t_list **lista, t_list **listb);
+void	ft_simple_swap(t_list **sta, t_list **stb, int flag);
 t_list	*ft_rotate(t_list *list, char *action);
-void	ft_rotate_double(t_list **lista, t_list **listb);
 t_list	*ft_r_rotate(t_list *list, char *action);
-void	ft_r_rotate_double(t_list **lista, t_list **listb);
 t_list	*ft_rotate_repeat(t_list *st, char *action, char *r_action, size_t nor);
 void	ft_push(t_list **from, t_list **to, char *action);
-
-void printf_list(t_list *list);
-
 
 #endif

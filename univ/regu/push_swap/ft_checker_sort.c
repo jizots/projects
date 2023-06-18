@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_checker_sort.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sotanaka <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/18 19:54:15 by sotanaka          #+#    #+#             */
+/*   Updated: 2023/06/18 19:54:18 by sotanaka         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
 int	ft_inta_is_small(int *a, int *b)
@@ -9,8 +21,6 @@ int	ft_inta_is_small(int *a, int *b)
 
 int	ft_intb_is_small(int *a, int *b)
 {
-if (b != NULL)
-printf("a %d, b %d\n", *a, *b);
 	if (b == NULL || *b < *a)
 		return (0);
 	return (-1);

@@ -6,7 +6,7 @@
 /*   By: sotanaka <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 18:01:46 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/05/19 18:01:52 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/06/18 19:53:58 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,11 @@ int	ft_atoi(const char *src, char **flag_error)
 	result = 0;
 	while (src[i] && ('0' <= src[i] && src[i] <= '9'))
 	{
-		if (sign_flag == 0 && ((INT_MAX / 10) <= result
-					&& ('8' <= src[i] && src[i] <= '9')))
-			*flag_error = NULL;
-		if (sign_flag == -1 && (INT_MAX / 10) <= result && '9' == src[i])
-			*flag_error = NULL;
 		result = result * 10 + (src[i] - '0');
+		if (sign_flag == 0 && result > INT_MAX)
+			*flag_error = NULL;
+		if (sign_flag == -1 && result > (unsigned int)-INT_MIN)
+			*flag_error = NULL;
 		i++;
 	}
 	if (src[i] != '\0' && (src[i] < '0' || '9' < src[i]))

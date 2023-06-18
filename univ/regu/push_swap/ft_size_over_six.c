@@ -1,43 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_size_over_six.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sotanaka <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/18 19:55:59 by sotanaka          #+#    #+#             */
+/*   Updated: 2023/06/18 19:56:03 by sotanaka         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
-
-// static void	ft_sort_under_six(t_list **sta, t_list **stb)
-// {
-// 	size_t	size_sta;
-// 	size_t	size_stb;
-
-// puts("under six");
-// 	size_sta = ft_lstsize(*sta);
-// 	size_stb = ft_lstsize(*stb);
-// 	if (size_sta == 5)
-// 		*sta = ft_size_five_a(*sta, *stb);
-// 	else if (size_sta == 4)
-// 		*sta = ft_size_four_a(*sta, *stb);
-// 	else if (size_sta == 3)
-// 		*sta = ft_size_three_a(*sta);
-// 	else if (size_sta == 2)
-// 		*sta = ft_size_two_a(*sta);
-// 	if (size_stb == 5)
-// 		*stb = ft_size_five_b(*sta, *stb);
-// 	else if (size_stb == 4)
-// 		*stb = ft_size_four_b(*sta, *stb);
-// 	else if (size_stb == 3)
-// 		*stb = ft_size_three_b(*stb);
-// 	else if (size_stb == 2)
-// 		*stb = ft_size_two_b(*stb);
-// }
-
-static void	ft_simple_swap(t_list **sta, t_list **stb)
-{
-	if ((*sta)->cont != NULL && (*stb)->cont != NULL &&
-		ft_inta_is_small((*sta)->cont, (*sta)->next->cont) == -1 &&
-			ft_intb_is_small((*stb)->cont, (*stb)->next->cont) == -1)
-		ft_swap_double(sta, stb);
-	else if ((*sta)->cont != NULL && ft_inta_is_small((*sta)->cont, (*sta)->next->cont) == -1)
-		*sta = ft_swap_single(*sta, "sa");
-	else if ((*stb)->cont != NULL && ft_intb_is_small((*stb)->cont, (*stb)->next->cont) == -1)
-		*stb = ft_swap_single(*stb, "sb");
-// puts("simple end");
-}
 
 size_t	ft_locate_specify(t_list *list, int specify)
 {
@@ -61,24 +34,19 @@ void	ft_push_tob_all(t_list **sta, t_list **stb, int *list_int, size_t size_stac
 	i = 0;
 	while ((*sta)->cont != NULL)
 	{
-		// ft_sort_under_six(sta, stb);
-		ft_simple_swap(sta, stb);
-// printf("cont %d\n", *((*sta)->cont));
-// printf("listint %d<->%d\n", list_int[0], list_int[5+i]);
-		if (list_int[0] <= *((*sta)->cont) && *((*sta)->cont) <= list_int[10 + i]) //100->10 , 500->27
+		ft_simple_swap(sta, stb, -1);
+		if (list_int[0] <= *((*sta)->cont) && *((*sta)->cont) <= list_int[((size_t)(size_stack / 23) + 9) + i])
 		{
 			ft_push(sta, stb, "pb");
-			if (list_int[7 + i] <= *((*stb)->cont))
+			if ((*sta)->cont == NULL || (size_stack - i) == 1)
+				break ;
+			if (list_int[(size_t)(size_stack / 40) + 1 + i] <= *((*stb)->cont))
 				*stb = ft_rotate(*stb, "rb");
-			if (i < (size_stack - 11))//100->11 , 500->28
+			if (i < (size_stack - (size_t)(size_stack / 23) + 9 + 1))
 				i++;
 		}
 		else
 			*sta = ft_rotate(*sta, "ra");
-// puts("---> a <---");
-// printf_list(*sta);
-// puts("---> b <---");
-// printf_list(*stb);
 	}
 }
 
@@ -122,24 +90,27 @@ void	ft_push_toa_all(t_list **sta, t_list **stb, int *list_int, size_t size_stac
 		times_rotate = ft_times_ratato(locate_max, locate_minus, size_stack);
 		*stb = ft_rotate_repeat(*stb, "rb", "rrb", times_rotate);
 		ft_push(stb, sta, "pa");
+		if ((*stb)->cont == NULL)
+			break ;
 		*stb = ft_rotate_repeat(*stb, "rb", "rrb", ft_locate_maximum(*stb));
 		ft_push(stb, sta, "pa");
-		ft_simple_swap(sta, stb);
+		ft_simple_swap(sta, stb, 0);
 		size_stack -= 2;
-puts("---> a <---");
-printf_list(*sta);
-puts("---> b <---");
-printf_list(*stb);
 	}
 }
 
 t_list	*ft_size_over_six(t_list *sta, t_list *stb, size_t size_stack)
 {
 	int	*list_int;
-	
+
 	if (ft_ascending_sorted(sta) == 0 && stb->cont == NULL)
 		return (sta);
 	list_int = ft_sort_int(sta);
+	if (list_int == NULL)
+	{
+		ft_put_error(sta);
+		return (NULL);
+	}
 	ft_push_tob_all(&sta, &stb, list_int, size_stack);
 	ft_push_toa_all(&sta, &stb, list_int, size_stack);
 	return (sta);

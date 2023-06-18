@@ -4,7 +4,7 @@ t_list	*ft_rotate_repeat(t_list *st, char *action, char *r_action, size_t nor)
 {
 	size_t	size_stack;
 
-	if (st == NULL || action == NULL || nor == 0)
+	if (st == NULL || st->cont==NULL || action == NULL || nor == 0)
 		return (st);
 	size_stack = ft_lstsize(st);
 	if ((size_stack / 2) > nor)
@@ -17,7 +17,5 @@ t_list	*ft_rotate_repeat(t_list *st, char *action, char *r_action, size_t nor)
 		while ((size_stack - nor++) > 0)
 			st = ft_r_rotate(st, r_action);
 	}
-// puts("->>>rotate repeat<<<-");printf_list(st);
 	return (st);
 }
-

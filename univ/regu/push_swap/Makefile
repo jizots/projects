@@ -6,7 +6,6 @@ SCRC	=	main.c\
 	ft_atoi.c\
 	ft_checker_circle.c\
 	ft_checker_sort.c\
-	ft_delete_datas.c\
 	ft_exec_push.c\
 	ft_exec_rotate.c\
 	ft_exec_rotate_repeat.c\
