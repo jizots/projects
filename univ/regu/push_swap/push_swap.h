@@ -1,5 +1,17 @@
-#ifndef PUSH_SWAP
-# define PUSH_SWAP
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   push_swap.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sotanaka <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/18 19:55:07 by sotanaka          #+#    #+#             */
+/*   Updated: 2023/06/18 19:55:09 by sotanaka         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef PUSH_SWAP_H
+# define PUSH_SWAP_H
 
 //include header
 # include <stdlib.h> // for malloc
@@ -20,15 +32,15 @@ typedef struct s_list
 
 //prototype
 int		ft_put_error(t_list *root);
-char	**ft_split(const char *, char);
+char	**ft_split(const char *s, char c);
 void	*ft_memchr(const void *s, int c, size_t n);
 size_t	ft_strlcpy(char *dest, const char *src, size_t size);
 size_t	ft_strlen(const char *str);
-t_list	*ft_make_initial_stack(char **); 
 void	ft_delete_datas(t_list *stack);
 int		ft_atoi(const char *src, char **flag_error);
+t_list	*ft_make_initial_stack(char **args);
 t_list	*ft_add_stack(t_list *stack, int *value);
-t_list	*ft_push_swap(t_list *);
+t_list	*ft_push_swap(t_list *sta);
 int		ft_lstsize(t_list *lst);
 size_t	ft_locate_minimum(t_list *root);
 size_t	ft_locate_maximum(t_list *root);
@@ -42,13 +54,11 @@ t_list	*ft_size_four_a(t_list *sta, t_list *stb);
 t_list	*ft_size_four_b(t_list *stb, t_list *sta);
 t_list	*ft_size_five_a(t_list *sta, t_list *stb);
 t_list	*ft_size_five_b(t_list *sta, t_list *stb);
-t_list	*ft_size_over_six(t_list *, t_list *, size_t);
+t_list	*ft_size_over_six(t_list *sta, t_list *stb, size_t size_lst);
 int		ft_inta_is_small(int *a, int *b);
 int		ft_intb_is_small(int *a, int *b);
 size_t	ft_ascending_sorted(t_list *list);
 size_t	ft_descending_sorted(t_list *list);
-size_t	ft_ascending_circle(t_list *root);
-size_t	ft_descending_circle(t_list *root);
 t_list	*ft_swap_single(t_list *list, char *action);
 void	ft_swap_double(t_list **lista, t_list **listb);
 void	ft_simple_swap(t_list **sta, t_list **stb, int flag);

@@ -27,7 +27,7 @@ size_t	ft_locate_specify(t_list *list, int specify)
 	return (i);
 }
 
-static t_list	*ft_create_bstack()
+static t_list	*ft_create_bstack(void)
 {
 	t_list	*new;
 
@@ -53,11 +53,11 @@ t_list	*ft_push_swap(t_list *sta)
 	}
 	size_stack = ft_lstsize(sta);
 	if (size_stack == 1)
-		return (sta);
+		;
 	else if (size_stack == 2)
-		return (ft_size_two_a(sta));
+		sta = ft_size_two_a(sta);
 	else if (size_stack == 3)
-		return (ft_size_three_a(sta));
+		sta = ft_size_three_a(sta);
 	else if (size_stack == 4)
 		sta = ft_size_four_a(sta, stb);
 	else if (size_stack == 5)

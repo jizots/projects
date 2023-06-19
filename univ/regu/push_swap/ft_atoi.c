@@ -43,6 +43,8 @@ int	ft_atoi(const char *src, char **flag_error)
 
 	i = ft_len_isspace3(src);
 	sign_flag = ft_isminus(src, &i);
+	if ((sign_flag == 0 || sign_flag == -1) && src[i] == '\0')
+		*flag_error = NULL;
 	result = 0;
 	while (src[i] && ('0' <= src[i] && src[i] <= '9'))
 	{

@@ -4,7 +4,6 @@ CFLAGS	=	-Wall -Wextra -Werror
 SCRC	=	main.c\
 	ft_add_stack.c\
 	ft_atoi.c\
-	ft_checker_circle.c\
 	ft_checker_sort.c\
 	ft_exec_push.c\
 	ft_exec_rotate.c\

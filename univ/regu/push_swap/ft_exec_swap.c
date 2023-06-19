@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_make_initial_list.c                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sotanaka <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/18 19:55:07 by sotanaka          #+#    #+#             */
+/*   Updated: 2023/06/18 19:55:09 by sotanaka         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
 t_list	*ft_swap_single(t_list *list, char *action)
@@ -34,9 +46,9 @@ void	ft_swap_double(t_list **lista, t_list **listb)
 
 void	ft_simple_swap(t_list **sta, t_list **stb, int flag)
 {
-	if ((*sta)->cont != NULL && (*stb)->cont != NULL &&
-		ft_inta_is_small((*sta)->cont, (*sta)->next->cont) == -1 &&
-			ft_intb_is_small((*stb)->cont, (*stb)->next->cont) == -1)
+	if ((*sta)->cont != NULL && (*stb)->cont != NULL
+		&& ft_inta_is_small((*sta)->cont, (*sta)->next->cont) == -1
+		&& ft_intb_is_small((*stb)->cont, (*stb)->next->cont) == -1)
 		ft_swap_double(sta, stb);
 	else if (flag == 0 && (*sta)->cont != NULL
 		&& ft_inta_is_small((*sta)->cont, (*sta)->next->cont) == -1)

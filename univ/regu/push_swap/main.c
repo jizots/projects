@@ -41,7 +41,7 @@ int	ft_put_error(t_list *root)
 {
 	if (root != NULL)
 		ft_delete_datas(root);
-	write (1, "Error\n", 6);
+	write (STDERR_FILENO, "Error\n", 6);
 	return (-1);
 }
 
@@ -62,7 +62,7 @@ int	main(int ac, char **av)
 		roota = ft_make_initial_stack(&av[1]);
 	if (ac == 2)
 		ft_free_args(av);
-	if (roota == NULL || ft_lstsize(roota) == 1)
+	if (roota == NULL)
 		return (ft_put_error(roota));
 	roota = ft_push_swap(roota);
 	if (roota == NULL)
@@ -70,3 +70,8 @@ int	main(int ac, char **av)
 	ft_delete_datas(roota);
 	return (0);
 }
+
+// __attribute__((destructor))
+// static void destructour(){
+// 	system("leaks -q push_swap");
+// }

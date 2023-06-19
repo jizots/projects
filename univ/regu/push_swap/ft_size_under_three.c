@@ -16,19 +16,19 @@ t_list	*ft_size_two_a(t_list *sta)
 {
 	if (ft_ascending_sorted(sta) != 0)
 		sta = ft_swap_single(sta, "sa");
-	return (sta);	
+	return (sta);
 }
 
 t_list	*ft_size_two_b(t_list *stb)
 {
 	if (ft_descending_sorted(stb) != 0)
 		stb = ft_swap_single(stb, "sb");
-	return (stb);	
+	return (stb);
 }
 
 t_list	*ft_size_three_a(t_list *sta)
 {
-	int vl[3];
+	int	vl[3];
 
 	vl[0] = *(sta->cont);
 	vl[1] = *(sta->next->cont);
@@ -37,7 +37,7 @@ t_list	*ft_size_three_a(t_list *sta)
 		return (sta);
 	if ((vl[0] < vl[1] && vl[0] < vl[2] && vl[1] > vl[2])
 		|| (vl[0] > vl[1] && vl[0] < vl[2] && vl[1] < vl[2])
-			|| (ft_descending_sorted(sta) == 0))
+		|| (ft_descending_sorted(sta) == 0))
 		sta = ft_swap_single(sta, "sa");
 	if (vl[0] < vl[1] && vl[0] > vl[2] && vl[1] > vl[2])
 		sta = ft_r_rotate(sta, "rra");
@@ -48,7 +48,7 @@ t_list	*ft_size_three_a(t_list *sta)
 
 t_list	*ft_size_three_b(t_list *stb)
 {
-	int vl[3];
+	int	vl[3];
 
 	vl[0] = *(stb->cont);
 	vl[1] = *(stb->next->cont);
@@ -57,7 +57,7 @@ t_list	*ft_size_three_b(t_list *stb)
 		return (stb);
 	if ((vl[0] < vl[1] && vl[0] > vl[2] && vl[1] > vl[2])
 		|| (vl[0] > vl[1] && vl[0] > vl[2] && vl[1] < vl[2])
-			|| (ft_ascending_sorted(stb) == 0))
+		|| (ft_ascending_sorted(stb) == 0))
 		stb = ft_swap_single(stb, "sb");
 	if (vl[0] > vl[1] && vl[0] < vl[2] && vl[1] < vl[2])
 		stb = ft_r_rotate(stb, "rrb");
