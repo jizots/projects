@@ -29,7 +29,8 @@ size_t	ft_ascending_circle(t_list *root)
 			root = root->next;
 			while (root->cont != NULL)
 			{
-				if (min < *(root->cont) || ft_inta_is_small(root->cont, root->next->cont) == -1)
+				if (min < *(root->cont)
+					|| ft_inta_is_small(root->cont, root->next->cont) == -1)
 					return (0);
 				root = root->next;
 			}
@@ -58,7 +59,8 @@ size_t	ft_descending_circle(t_list *root)
 			root = root->next;
 			while (root->cont != NULL)
 			{
-				if (max > *(root->cont) || ft_intb_is_small(root->cont, root->next->cont) == -1)
+				if (max > *(root->cont)
+					|| ft_intb_is_small(root->cont, root->next->cont) == -1)
 					return (0);
 				root = root->next;
 			}

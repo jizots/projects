@@ -31,5 +31,4 @@ void	ft_push(t_list **from, t_list **to, char *action)
 	*from = tmp_fnext;
 	write(1, action, 2);
 	write(1, "\n", 1);
-
 }

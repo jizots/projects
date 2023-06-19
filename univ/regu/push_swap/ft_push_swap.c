@@ -12,6 +12,21 @@
 
 #include "push_swap.h"
 
+size_t	ft_locate_specify(t_list *list, int specify)
+{
+	size_t	i;
+
+	if (list->cont == NULL)
+		return (0);
+	i = 0;
+	while (*(list->cont) != specify)
+	{
+		list = list->next;
+		i++;
+	}
+	return (i);
+}
+
 static t_list	*ft_create_bstack()
 {
 	t_list	*new;

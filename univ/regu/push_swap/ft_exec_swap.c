@@ -38,8 +38,10 @@ void	ft_simple_swap(t_list **sta, t_list **stb, int flag)
 		ft_inta_is_small((*sta)->cont, (*sta)->next->cont) == -1 &&
 			ft_intb_is_small((*stb)->cont, (*stb)->next->cont) == -1)
 		ft_swap_double(sta, stb);
-	else if (flag == 0 && (*sta)->cont != NULL && ft_inta_is_small((*sta)->cont, (*sta)->next->cont) == -1)
+	else if (flag == 0 && (*sta)->cont != NULL
+		&& ft_inta_is_small((*sta)->cont, (*sta)->next->cont) == -1)
 		*sta = ft_swap_single(*sta, "sa");
-	else if ((*stb)->cont != NULL && ft_intb_is_small((*stb)->cont, (*stb)->next->cont) == -1)
+	else if ((*stb)->cont != NULL
+		&& ft_intb_is_small((*stb)->cont, (*stb)->next->cont) == -1)
 		*stb = ft_swap_single(*stb, "sb");
 }

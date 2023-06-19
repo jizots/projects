@@ -12,19 +12,13 @@
 
 #include "push_swap.h"
 
-size_t	ft_locate_specify(t_list *list, int specify)
+void	ft_push_tob_all_6to10(t_list **sta, t_list **stb)
 {
-	size_t	i;
-
-	if (list->cont == NULL)
-		return (0);
-	i = 0;
-	while (*(list->cont) != specify)
+	while ((*sta)->cont != NULL)
 	{
-		list = list->next;
-		i++;
+		ft_simple_swap(sta, stb, -1);
+		ft_push(sta, stb, "pb");
 	}
-	return (i);
 }
 
 void	ft_push_tob_all(t_list **sta, t_list **stb, int *list_int, size_t size_stack)
@@ -35,14 +29,15 @@ void	ft_push_tob_all(t_list **sta, t_list **stb, int *list_int, size_t size_stac
 	while ((*sta)->cont != NULL)
 	{
 		ft_simple_swap(sta, stb, -1);
-		if (list_int[0] <= *((*sta)->cont) && *((*sta)->cont) <= list_int[((size_t)(size_stack / 23) + 9) + i])
+		if (list_int[0] <= *((*sta)->cont)
+			&& *((*sta)->cont) <= list_int[((size_t)(size_stack * 0.04) + 10) + i])
 		{
 			ft_push(sta, stb, "pb");
 			if ((*sta)->cont == NULL || (size_stack - i) == 1)
 				break ;
-			if (list_int[(size_t)(size_stack / 40) + 1 + i] <= *((*stb)->cont))
+			if (list_int[(size_t)(size_stack * 0.025 + 0.5) + i] <= *((*stb)->cont))
 				*stb = ft_rotate(*stb, "rb");
-			if (i < (size_stack - (size_t)(size_stack / 23) + 9 + 1))
+			if (i < (size_stack - ((size_t)(size_stack * 0.04) + 10 + 1)))
 				i++;
 		}
 		else
@@ -111,7 +106,10 @@ t_list	*ft_size_over_six(t_list *sta, t_list *stb, size_t size_stack)
 		ft_put_error(sta);
 		return (NULL);
 	}
-	ft_push_tob_all(&sta, &stb, list_int, size_stack);
+	if (size_stack <= 10)
+		ft_push_tob_all_6to10(&sta, &stb);
+	else
+		ft_push_tob_all(&sta, &stb, list_int, size_stack);
 	ft_push_toa_all(&sta, &stb, list_int, size_stack);
 	return (sta);
 }

@@ -32,6 +32,7 @@ t_list	*ft_push_swap(t_list *);
 int		ft_lstsize(t_list *lst);
 size_t	ft_locate_minimum(t_list *root);
 size_t	ft_locate_maximum(t_list *root);
+size_t	ft_locate_specify(t_list *list, int specify);
 int		*ft_sort_int(t_list *list);
 t_list	*ft_size_two_a(t_list *root);
 t_list	*ft_size_two_b(t_list *root);
