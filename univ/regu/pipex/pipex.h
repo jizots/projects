@@ -29,6 +29,6 @@ char	*ft_get_absolute_path(char **paths, char *command);//access
 int		ft_exec_command(char *ab_path, char **option, char *insorce);//execve, open, read, write, pipe
 int		ft_print_perror(char *original_message);//perror, write
 int		ft_mes_error(char *message);
-int		ft_free_matrix(char **matrix, int flag_error);
+int		ft_free_matrix(char **matrix1, char **matrix2, int flag_error);
 
 #endif

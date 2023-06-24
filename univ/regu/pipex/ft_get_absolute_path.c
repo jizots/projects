@@ -8,13 +8,13 @@ char	*ft_make_potential_fullpath(char **paths, char *candidate, char *command)
 	temp_path = ft_strjoin(candidate, "/");
 	if (temp_path == NULL)
 	{
-		ft_free_matrix(paths, 1);
+		ft_free_matrix(paths, NULL, 1);
 		return (NULL);
 	}
 	full_path = ft_strjoin(temp_path, command);
 	if (full_path == NULL)
 	{
-		ft_free_matrix(paths, 1);
+		ft_free_matrix(paths, NULL, 1);
 		free(temp_path);
 		return (NULL);
 	}
@@ -47,6 +47,6 @@ char	*ft_get_absolute_path(char **paths, char *command)
 	mes_not_found = ft_strjoin(command, " : command not found\n");
 	ft_mes_error(mes_not_found);
 	free(mes_not_found);
-	ft_free_matrix(paths, 0);
+	ft_free_matrix(paths, NULL, 0);
 	return (NULL);
 }
