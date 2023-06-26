@@ -39,7 +39,7 @@ int	ft_fork_for_outfile(int *in_pipefd, char **av, int ac)
 	pid = fork();
 	if (pid == 0)
 		ft_pipe_to_outfile(in_pipefd, matrix_cmd, fullpath, av[ac - 1]);
-	if (ft_wait_judge_child(pid, NULL) != 0)
+	if (ft_wait_judge_child(pid) != 0)
 		return (EXIT_FAILURE);
 	ft_free_allocates(matrix_cmd, matrix_path, fullpath, 0);
 	return (EXIT_SUCCESS);

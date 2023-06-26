@@ -41,7 +41,7 @@ int	ft_fork_for_infile(int *in_pipefd, char **av)
 	pid = fork();
 	if (pid == 0)
 		ft_infile_to_pipe(in_pipefd, matrix_cmd, fullpath, av[1]);
-	if (ft_wait_judge_child(pid, NULL) != 0)
+	if (ft_wait_judge_child(pid) != 0)
 		return (EXIT_FAILURE);
 	if (close(in_pipefd[1]) == -1)
 		return (ft_print_perror("close in_pipefd[1]-main"));
