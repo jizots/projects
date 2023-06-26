@@ -13,19 +13,27 @@ SRCS	=	main.c\
 	ft_get_absolute_path.c\
 	ft_print_error.c\
 	ft_seach_envpaths.c\
-	libft.a\
 
 OBJS	=	$(SRCS:%.c=%.o)
 
-all:	$(NAME)
+LIBFT_DIR = Libft
+LIBFT_MAKEFILE = $(LIBFT_DIR)/Makefile
+LIBFT_STATIC = $(LIBFT_DIR)/libft.a
 
-$(NAME):	$(OBJS)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJS)
+all: $(NAME)
+
+$(NAME): $(OBJS) $(LIBFT_STATIC)
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) -L$(LIBFT_DIR) -lft
+
+$(LIBFT_STATIC):
+	$(MAKE) -C $(LIBFT_DIR)
 
 clean:
+	$(MAKE) -C $(LIBFT_DIR) clean
 	rm -f $(OBJS)
 
-fclean:	clean
+fclean: clean
+	$(MAKE) -C $(LIBFT_DIR) fclean
 	rm -f $(NAME)
-
+	
 re:	fclean all

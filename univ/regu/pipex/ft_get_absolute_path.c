@@ -1,28 +1,20 @@
 #include "pipex.h"
 
-char	*ft_make_potential_fullpath(char **matrix_path, char *candidate, char *command)
+static int	ft_make_potential_fullpath(char **matrix_path, char *candidate, char *command, char **fullpath)
 {
 	char	*temp_path;
-	char	*fullpath;
 
 	temp_path = ft_strjoin(candidate, "/");
 	if (temp_path == NULL)
-	{
-		ft_free_allocates(matrix_path, NULL, NULL, 1);
-		return (NULL);
-	}
-	fullpath = ft_strjoin(temp_path, command);
-	if (fullpath == NULL)
-	{
-		ft_free_allocates(matrix_path, NULL, NULL, 1);
-		free(temp_path);
-		return (NULL);
-	}
+		return (ft_free_allocates(matrix_path, NULL, NULL, 1));
+	*fullpath = ft_strjoin(temp_path, command);
+	if (*fullpath == NULL)
+		return (ft_free_allocates(matrix_path, NULL, temp_path, 1));
 	free(temp_path);
-	return (fullpath);
+	return (EXIT_SUCCESS);
 }
 
-char	*ft_get_absolute_path(char **matrix_path, char *command, char **fullpath)
+int	ft_get_absolute_path(char **matrix_path, char *command, char **fullpath)
 {
 	size_t	i;
 	char	*s_error;
@@ -30,22 +22,20 @@ char	*ft_get_absolute_path(char **matrix_path, char *command, char **fullpath)
 	i = 0;
 	while (matrix_path[i] != NULL)
 	{
-		*fullpath = ft_make_potential_fullpath(matrix_path, matrix_path[i], command);
-		if (*fullpath == NULL)
-			return (NULL);
-		if (access(*fullpath, X_OK) == 0)
-			return (*fullpath);
-		else if (errno == EACCES)
+		if (command[0] == '/')
 		{
-			ft_print_perror(command);
-			return (NULL);
+			*fullpath = ft_strdup(command);
+			return (EXIT_SUCCESS);
 		}
+		if (ft_make_potential_fullpath(matrix_path, matrix_path[i++], command, fullpath) != 0)
+			return (EXIT_FAILURE);
+		if (access(*fullpath, X_OK) == 0)
+			return (EXIT_SUCCESS);
+		else if (errno == EACCES)
+			ft_print_perror(command);
 		free(*fullpath);
-		i++;
 	}
-	s_error = ft_strjoin(command, " : command not found.\n");
+	s_error = ft_strjoin(command, " : command not found\n");
 	ft_mes_error(s_error);
-	free(s_error);
-	ft_free_allocates(matrix_path, NULL, NULL, 0);
-	return (NULL);
+	return (ft_free_allocates(matrix_path, NULL, s_error, 0));
 }

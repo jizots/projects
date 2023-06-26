@@ -33,14 +33,16 @@ int	ft_fork_for_outfile(int *in_pipefd, char **av, int ac)
 		return (EXIT_FAILURE);
 	matrix_cmd = ft_split(av[ac - 2], ' ');
 	if (matrix_cmd == NULL)
-		return (ft_mes_error("Error. Split can't allocate.\n"));
-	if (ft_get_absolute_path(matrix_path, matrix_cmd[0], &fullpath) == NULL)
+		return (ft_free_allocates(matrix_path, NULL, NULL, 1));
+	if (ft_get_absolute_path(matrix_path, matrix_cmd[0], &fullpath) != 0)
 		return (ft_free_allocates(matrix_cmd, NULL, NULL, 0));
 	pid = fork();
 	if (pid == 0)
 		ft_pipe_to_outfile(in_pipefd, matrix_cmd, fullpath, av[ac - 1]);
 	if (ft_wait_judge_child(pid) != 0)
-		return (EXIT_FAILURE);
+		return (ft_free_allocates(matrix_cmd, matrix_path, fullpath, 0));
+	if (close(in_pipefd[0]) == -1)
+		return (ft_print_perror("close out_pipefd[0]-main"));
 	ft_free_allocates(matrix_cmd, matrix_path, fullpath, 0);
 	return (EXIT_SUCCESS);
 }

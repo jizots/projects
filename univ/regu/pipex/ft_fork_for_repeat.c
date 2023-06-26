@@ -42,10 +42,10 @@ int	ft_fork_for_repeat_pipe(int *out_pipefd, int *in_pipefd, char **av, int ac)
 			return (ft_mes_error("Error. Split can't allocate.\n"));
 		if (ft_search_envpaths(&matrix_path) == NULL)//can move to main
 			return (ft_free_allocates(matrix_cmd, NULL, NULL, 1));
-		if (ft_get_absolute_path(matrix_path, matrix_cmd[0], &fullpath) == NULL)
+		if (ft_get_absolute_path(matrix_path, matrix_cmd[0], &fullpath) != 0)
 			return (ft_free_allocates(matrix_cmd, NULL, NULL, 0));
 		if (fr_pipe_to_pipe(in_pipefd, out_pipefd, matrix_cmd, fullpath) != 0)
-			return (EXIT_FAILURE);
+			return (ft_free_allocates(matrix_cmd, matrix_path, fullpath, 0));
 		in_pipefd[0] = out_pipefd[0];
 		if (close(out_pipefd[1]) == -1)
 			exit(ft_print_perror("close out_pipefd[1]-main"));
