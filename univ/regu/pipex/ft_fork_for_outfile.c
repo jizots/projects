@@ -1,0 +1,46 @@
+#include "pipex.h"
+
+extern char	**environ;
+
+static int ft_pipe_to_outfile(int *in_pipefd, char **matrix_cmd, char *fullpath, char *filename)
+{
+	int	fdw;
+
+	fdw = open(filename, O_WRONLY);
+	if (fdw < 0)
+		exit(ft_print_perror(filename));
+	if (dup2 (in_pipefd[0], STDIN_FILENO) == -1)
+		exit(ft_print_perror("dup2 in_pipefd[0]-outfile"));
+	if (dup2 (fdw, STDOUT_FILENO) == -1)
+		exit(ft_print_perror("dup2 outfile"));
+	if (close (fdw) == -1)
+		exit(ft_print_perror("close outfile"));
+	if (close(in_pipefd[0]) == -1)
+		exit(ft_print_perror("close in_pipefd[0]-outfile"));
+	if (execve(fullpath, matrix_cmd, environ) == -1)
+		exit(ft_print_perror(fullpath));
+	exit(EXIT_SUCCESS);
+}
+
+int	ft_fork_for_outfile(int *in_pipefd, char **av, int ac)
+{
+	pid_t	pid;
+	char	**matrix_cmd;
+	char	**matrix_path;
+	char	*fullpath;
+
+	if (ft_search_envpaths(&matrix_path) == NULL)//can move to main
+		return (EXIT_FAILURE);
+	matrix_cmd = ft_split(av[ac - 2], ' ');
+	if (matrix_cmd == NULL)
+		return (ft_mes_error("Error. Split can't allocate.\n"));
+	if (ft_get_absolute_path(matrix_path, matrix_cmd[0], &fullpath) == NULL)
+		return (ft_free_allocates(matrix_cmd, NULL, NULL, 0));
+	pid = fork();
+	if (pid == 0)
+		ft_pipe_to_outfile(in_pipefd, matrix_cmd, fullpath, av[ac - 1]);
+	if (ft_wait_judge_child(pid, NULL) != 0)
+		return (EXIT_FAILURE);
+	ft_free_allocates(matrix_cmd, matrix_path, fullpath, 0);
+	return (EXIT_SUCCESS);
+}

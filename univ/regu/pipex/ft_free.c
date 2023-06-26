@@ -1,6 +1,6 @@
 #include "pipex.h"
 
-int	ft_free_matrix(char **matrix1, char **matrix2, int flag_error)
+int	ft_free_allocates(char **matrix1, char **matrix2, char *s, int flag_error)
 {
 	size_t	i;
 
@@ -18,7 +18,9 @@ int	ft_free_matrix(char **matrix1, char **matrix2, int flag_error)
 			free(matrix2[i++]);
 		free(matrix2);
 	}
+	if (s != NULL)
+		free(s);
 	if (flag_error != 0)
 		ft_mes_error("Error. Fail allocate memory.\n");
-	return (-1);
+	return (EXIT_FAILURE);
 }
