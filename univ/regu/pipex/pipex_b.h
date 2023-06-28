@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   pipex_b.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 14:50:51 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/06/28 14:59:33 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/06/28 16:49:43 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#ifndef PIPEX_B_H
+# define PIPEX_B_H
 
 //define
 
@@ -49,6 +49,11 @@ int		ft_print_perror(char *original_message);
 int		ft_mes_error(char *message);
 int		ft_free_allocates(char **matrix1,
 			char **matrix2, char *s, int flag_error);
+char	*get_next_line(int fd);
+void	*ft_calloc(size_t nmemb, size_t size);
+void	*ft_memchr(const void *s, int c, size_t n);
+size_t	ft_strlcat(char *dest, const char *src, size_t size);
+int		ft_createline_nobuf(char **save, char **s_nl, char *flag);
 
 //test only
 // void	printmatrix(char **matrix, char *name_item);
