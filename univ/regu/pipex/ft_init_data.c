@@ -1,30 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_fork_util.c                                     :+:      :+:    :+:   */
+/*   ft_init_data.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/28 14:49:56 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/06/29 13:41:56 by sotanaka         ###   ########.fr       */
+/*   Created: 2023/06/29 19:24:22 by sotanaka          #+#    #+#             */
+/*   Updated: 2023/06/29 19:27:26 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int	ft_wait_judge_child(int pid)
+int	ft_init_data(t_cmds *data, int ac, char *av[], char *envp[])
 {
-	int	status;
-
-	if (pid == -1)
-		return (ft_print_perror("fork"));
-	else
-	{
-		pid = wait(&status);
-		if (pid == -1)
-			return (ft_print_perror("wait"));
-		if (WIFEXITED(status) && WEXITSTATUS(status))
-			return (ft_mes_error("Child process end with error."));
-		return (EXIT_SUCCESS);
-	}
+	data->ac = ac;
+	data->av = av;
+	data->matrix_env = envp;
+	if (ft_search_envpaths(&(data->matrix_epath)) == NULL)
+		return (ft_mes_error("envp"));
+	data->delim = 0;
+	data->matrix_cmd = NULL;
+	data->path_cmd = NULL;
+	if (pipe(data->in_pipefd) == -1)
+		return(ft_mes_error("pipe"));
+	return (EXIT_SUCCESS);
 }

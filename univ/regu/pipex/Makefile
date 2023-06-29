@@ -1,11 +1,12 @@
 NAME	=	pipex
 BNAME	=	pipex
 
-CC		=	cc
+CC		=	cc -g
 
 CFLAGS	=	-Wall -Wextra -Werror
 
 SRCS	=	main.c\
+	ft_init_data.c\
 	ft_fork_for_infile.c\
 	ft_fork_for_outfile.c\
 	ft_fork_for_repeat.c\
@@ -16,6 +17,7 @@ SRCS	=	main.c\
 	ft_seach_envpaths.c\
 
 BSRCS	=	test.c\
+	ft_init_data.c\
 	ft_fork_for_infile.c\
 	ft_fork_for_outfile.c\
 	ft_fork_for_repeat.c\
@@ -57,6 +59,7 @@ clean:
 
 fclean: clean
 	$(MAKE) -C $(LIBFT_DIR) fclean
+	$(MAKE) -C $(GNL_DIR) fclean
 	rm -f $(NAME)
 	rm -f $(BNAME)
 	

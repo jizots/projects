@@ -6,7 +6,7 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 14:49:43 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/06/28 14:53:24 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/06/29 19:14:07 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,51 +14,45 @@
 
 extern char	**environ;
 
-static int	ft_pipe_to_outfile(int *in_pipefd, char **matrix_cmd,
-	char *fullpath, char *filename)
+static int	ft_pipe_to_outfile(t_cmds *data, char *filename)
 {
 	int	fdw;
 
 	fdw = open(filename, O_CREAT | O_WRONLY | O_TRUNC, S_IRUSR | S_IWUSR);
 	if (fdw < 0)
 		exit(ft_print_perror(filename));
-	if (dup2 (in_pipefd[0], STDIN_FILENO) == -1)
+	if (dup2 (data->in_pipefd[0], STDIN_FILENO) == -1)
 		exit(ft_print_perror("dup2 in_pipefd[0]-outfile"));
 	if (dup2 (fdw, STDOUT_FILENO) == -1)
 		exit(ft_print_perror("dup2 outfile"));
 	if (close (fdw) == -1)
 		exit(ft_print_perror("close outfile"));
-	if (close(in_pipefd[0]) == -1)
+	if (close(data->in_pipefd[0]) == -1)
 		exit(ft_print_perror("close in_pipefd[0]-outfile"));
-	if (execve(fullpath, matrix_cmd, environ) == -1)
+	if (execve(data->path_cmd, data->matrix_cmd, data->matrix_env) == -1)
 	{
 		if (errno != EACCES && errno != ENOENT)
-			exit(ft_print_perror(fullpath));
+			exit(ft_print_perror(data->path_cmd));
 	}
 	exit(EXIT_SUCCESS);
 }
 
-int	ft_fork_for_outfile(int *in_pipefd, char **av, int ac)
+int	ft_fork_for_outfile(t_cmds *data)
 {
 	pid_t	pid;
-	char	**matrix_cmd;
-	char	**matrix_path;
-	char	*fullpath;
 
-	if (ft_search_envpaths(&matrix_path) == NULL)
-		return (EXIT_FAILURE);
-	matrix_cmd = ft_split(av[ac - 2], ' ');
-	if (matrix_cmd == NULL)
-		return (ft_free_allocates(matrix_path, NULL, NULL, 1));
-	if (ft_get_absolute_path(matrix_path, matrix_cmd[0], &fullpath) != 0)
-		return (ft_free_allocates(matrix_cmd, NULL, NULL, 0));
+	data->matrix_cmd = ft_split(data->av[data->ac - 2], ' ');
+	if (data->matrix_cmd == NULL)
+		return (ft_free_allocates(data->matrix_epath, NULL, NULL, 1));
+	if (ft_get_absolute_path(data) != 0)
+		return (ft_free_allocates(data->matrix_cmd, NULL, NULL, 0));
 	pid = fork();
 	if (pid == 0)
-		ft_pipe_to_outfile(in_pipefd, matrix_cmd, fullpath, av[ac - 1]);
+		ft_pipe_to_outfile(data, data->av[data->ac - 1]);
 	if (ft_wait_judge_child(pid) != 0)
-		return (ft_free_allocates(matrix_cmd, matrix_path, fullpath, 0));
-	if (close(in_pipefd[0]) == -1)
+		return (ft_free_allocates(data->matrix_cmd, data->matrix_epath, data->path_cmd, 0));
+	if (close(data->in_pipefd[0]) == -1)
 		return (ft_print_perror("close out_pipefd[0]-main"));
-	ft_free_allocates(matrix_cmd, matrix_path, fullpath, 0);
+	ft_free_allocates(data->matrix_cmd, data->matrix_epath, data->path_cmd, 0);
 	return (EXIT_SUCCESS);
 }
