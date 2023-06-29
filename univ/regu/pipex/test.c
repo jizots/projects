@@ -1,6 +1,6 @@
 #include "pipex_b.h"
 
-int	ft_here_doc(int *in_pipefd, int *out_pipefd, char **av)
+int	ft_here_doc(int *in_pipefd, char **av)
 {
 	pid_t	pid;
 	char	*line;
@@ -8,19 +8,20 @@ int	ft_here_doc(int *in_pipefd, int *out_pipefd, char **av)
 	pid = fork();
 	if (pid == 0)
 	{
-puts("in fork");
 		if (close(in_pipefd[0]) == -1)
 			exit(ft_print_perror("close in_pipefd[0]-first"));
-		if (dup2(in_pipefd[1], STDOUT_FILENO) == -1)
-			exit(ft_print_perror("dup2 fdr"));
+puts("close in pipe ok");
+		// if (dup2(in_pipefd[1], STDOUT_FILENO) == -1)
+		// 	exit(ft_print_perror("dup2 fdr"));
 puts("dup ok");
 		if (close(in_pipefd[1]) == -1)
 			exit (ft_print_perror("dup2 fdr"));
-		line = NULL;
-		while (1)
+		line = (char *)&pid;
+		while (line)
 		{
 puts("in while");
 			line = get_next_line(STDIN_FILENO);
+printf("line = %s\n", line);
 			if (ft_strstr(av[2], line) == NULL)
 			{
 puts("strstr error");
@@ -28,8 +29,11 @@ puts("strstr error");
 				free (line);
 			}
 			else
+{puts("break");
 				break ;
+}
 		}
+puts("end while");
 		exit(EXIT_SUCCESS);
 	}
 	if (ft_wait_judge_child(pid) != 0)
@@ -50,7 +54,7 @@ int main(int ac, char **av)
 	if (ft_strstr("here_doc", av[1]) != NULL)
 	{
 puts("here");
-		if (ft_here_doc(in_pipefd, out_pipefd, av) != 0)
+		if (ft_here_doc(in_pipefd, av) != 0)
 			return (EXIT_FAILURE);
 		return (EXIT_SUCCESS);
 	}
