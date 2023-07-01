@@ -6,7 +6,7 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 14:50:51 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/06/29 19:24:55 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/06/30 13:28:54 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,11 @@
 //deffine
 # define PIPE 1
 # define SEMIC 2
-# define OREDIR 3
-# define OOREDIR 4
-# define IREDIR 5
-# define HREDIR 6
+# define O_REDIRECT 3
+# define OO_REDIRECT 4
+# define I_REDIRECT 5
+# define H_REDIRECT 6
+# define HERE_DOC 7
 
 //typedef
 typedef struct s_cmds
@@ -42,6 +43,8 @@ typedef struct s_cmds
 	char			*path_cmd;
 	int				in_pipefd[2];
 	int				out_pipefd[2];
+	int				fd_stdin;
+	int				fd_stdout;
 	struct s_cmds	*next;
 }	t_cmds;
 

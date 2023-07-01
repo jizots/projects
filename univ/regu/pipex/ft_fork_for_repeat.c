@@ -6,7 +6,7 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 14:49:50 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/06/29 19:12:23 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/06/30 19:36:01 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ int	ft_fork_for_repeat_pipe(t_cmds *data)
 		if (ft_get_absolute_path(data) != 0)
 			return (ft_free_allocates(data->matrix_cmd, NULL, NULL, 0));
 		if (fr_pipe_to_pipe(data) != 0)
-			return (ft_free_allocates(data->matrix_cmd, data->matrix_epath, data->path_cmd, 0));
+			return (ft_free_allocates
+				(data->matrix_cmd, data->matrix_epath, data->path_cmd, 0));
 		data->in_pipefd[0] = data->out_pipefd[0];
 		if (close(data->out_pipefd[1]) == -1)
 			exit(ft_print_perror("close out_pipefd[1]-main"));

@@ -1,33 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   main_b.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/28 14:50:45 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/06/30 15:55:11 by sotanaka         ###   ########.fr       */
+/*   Created: 2023/06/30 18:51:52 by sotanaka          #+#    #+#             */
+/*   Updated: 2023/06/30 19:37:48 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "pipex_b.h"
 
-// void	printmatrix(char **matrix, char *name_item)
-// {
-// 	printf ("-->%s<--\n", name_item);
-// 	for (int i = 0; matrix[i] != NULL; i++)
-// 		printf("%s\n", matrix[i]);
-// }
-
-int	main(int ac, char *av[], char *envp[])
+int	main(int ac, char **av, char *envp[])
 {
 	t_cmds	data;
 
 	if (ac < 5)
-		return (ft_mes_error("Error. Entry [in_file] [cmd] [cmd] [out_file]\n"));
+		return (ft_mes_error
+			("Error. Entry 'here_doc' [cmd] [cmd] [out_file]\n"));
 	if (ft_init_data(&data, ac, av, envp) != 0)
 		return (EXIT_FAILURE);
-	if (ft_fork_for_infile(&data) != 0)
+	if (data.delim == HERE_DOC)
+	{
+		if (ft_here_doc(&data) != 0)
+			return (EXIT_FAILURE);
+	}
+	else if (ft_fork_for_infile(&data) != 0)
 		return (EXIT_FAILURE);
 	if (6 <= ac)
 	{

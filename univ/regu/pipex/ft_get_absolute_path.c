@@ -6,7 +6,7 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 14:50:26 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/06/29 19:14:42 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/06/30 19:36:22 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 static int	ft_make_potential_fullpath(t_cmds *data, char *candidate)
 {
 	char	*temp_path;
+
 	temp_path = ft_strjoin(candidate, "/");
 	if (temp_path == NULL)
 		return (ft_free_allocates(data->matrix_epath, NULL, NULL, 1));
