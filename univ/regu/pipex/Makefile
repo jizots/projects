@@ -14,36 +14,35 @@ SRCS    =   ft_init_data.c\
 		ft_print_error.c\
 		ft_seach_envpaths.c\
 
-BSRCS   =   main_b.c\
-		ft_heredoc.c\
+MAIN	=	main.c
+BONUS_MAIN = main_b.c
+BSRCS   =   ft_heredoc.c\
 
+ifeq ($(MAKECMDGOALS),bonus)
+    MAIN = $(BONUS_MAIN)
+    SRCS += $(BSRCS)
+endif
+
+SRCS += $(MAIN)
 OBJS    =   $(SRCS:%.c=obj/%.o)
-BOBJS   =   $(BSRCS:%.c=obj_bonus/%.o)
 
 LIBFT_DIR   = libft
-LIBFT_MAKEFILE = $(LIBFT_DIR)/Makefile
 LIBFT_STATIC = $(LIBFT_DIR)/libft.a
 
 GNL_DIR = get_next_line
-GNL_MAKEFILE = $(GNL_DIR)/Makefile
 GNL_STATIC = $(GNL_DIR)/libgnlft.a
 
-.PHONY: all $(NAME) bonus clean fclean re
+.PHONY: all bonus clean fclean re
 
 all: $(NAME)
 
-bonus: $(OBJS) $(BOBJS) $(LIBFT_STATIC) $(GNL_STATIC)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(BOBJS) -L$(LIBFT_DIR) -lft -L$(GNL_DIR) -lgnlft
+$(NAME): $(OBJS) $(LIBFT_STATIC) $(GNL_STATIC)
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) -L$(LIBFT_DIR) -lft -L$(GNL_DIR) -lgnlft
 
-$(NAME): obj/main.o $(OBJS) $(LIBFT_STATIC)
-	$(CC) $(CFLAGS) -o $(NAME) obj/main.o $(OBJS) -L$(LIBFT_DIR) -lft
+bonus: $(NAME)
 
 obj/%.o: %.c
 	mkdir -p obj
-	$(CC) $(CFLAGS) -c $< -o $@
-
-obj_bonus/%.o: %.c
-	mkdir -p obj_bonus
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(LIBFT_STATIC):
@@ -55,7 +54,7 @@ $(GNL_STATIC):
 clean:
 	$(MAKE) -C $(LIBFT_DIR) clean
 	$(MAKE) -C $(GNL_DIR) clean
-	rm -rf obj obj_bonus
+	rm -rf obj
 
 fclean: clean
 	$(MAKE) -C $(LIBFT_DIR) fclean
