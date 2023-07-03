@@ -1,19 +1,24 @@
-NAME	=	libgnlft.a
-CC 		=	cc
-CFLAGS	=	-Wall -Wextra -Werror
-SCRS	=	get_next_line.c	get_next_line_utils.c \
+GNL_NAME = libgnlft.a
 
-OBJS	=	$(SCRS:%.c=%.o)
+GNL_SRCS = get_next_line.c get_next_line_utils.c
 
-all:	$(NAME)
+GNL_OBJS = $(GNL_SRCS:.c=.o)
 
-$(NAME):	$(OBJS)
+CC = cc
+CFLAGS = -Wall -Wextra -Werror
+
+all: $(GNL_NAME)
+
+$(GNL_NAME): $(GNL_OBJS)
 	ar rcs $@ $^
 
-clean:
-	rm -f $(OBJS)
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
 
-fclean:	clean
-	rm -f $(NAME)
+clean:
+	rm -f $(GNL_OBJS)
+
+fclean: clean
+	rm -f $(GNL_NAME)
 
 re: fclean all
