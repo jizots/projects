@@ -19,7 +19,7 @@ clean:
 	rm -f $(OBJS)
 
 fclean: clean
-	$(MAKE) -C $(LIBORFT_DIR) clean
+	$(MAKE) -C $(LIBORFT_DIR) fclean
 	rm -f $(NAME)
 
 re: fclean all

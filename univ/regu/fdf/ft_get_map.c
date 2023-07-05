@@ -41,7 +41,7 @@ t_fdf	**ft_str_conv_data(char *str, t_fdf **list_d, int ordinate, int axis)
 	newlist = ft_newlist(axis, ordinate, ft_atoi(str), color);
 	if (newlist == NULL)
 		return (NULL);
-	ft_lstadd_back(list_d, newlist);
+	ft_lstadd_back(list_d, newlist);//一番最後を探すのにめっちゃ時間かかる気がするので、最後の要素を与えて、そこにサクッと追加するのが良さそう。
 	return (list_d);
 }
 
