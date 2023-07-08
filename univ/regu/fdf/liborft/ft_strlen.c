@@ -1,26 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_length_utils.c                                  :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/08 15:10:08 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/07/08 15:10:52 by sotanaka         ###   ########.fr       */
+/*   Created: 2023/07/08 14:22:03 by sotanaka          #+#    #+#             */
+/*   Updated: 2023/07/08 15:15:26 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "liborft.h"
 
-double	ft_hypotenus_of_pytgrs(double x, double y)
+size_t	ft_strlen(const char *str)
 {
-	return (sqrt(pow(x, 2) + pow(y, 2)));
+	size_t	count;
+
+	if (str == NULL)
+		return (0);
+	count = 0;
+	while (str[count])
+		count++;
+	return (count);
 }
-
-// int main()
-// {
-// 	double	x;
-// 	double	y;
-
-// 	printf("hepotenus of x & y: %f\n", ft_hypotenus_of_pytgrs(sqrt(3),1));
-// }

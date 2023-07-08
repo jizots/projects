@@ -1,26 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_length_utils.c                                  :+:      :+:    :+:   */
+/*   ft_print_error.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/08 15:10:08 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/07/08 15:10:52 by sotanaka         ###   ########.fr       */
+/*   Created: 2023/06/28 14:50:34 by sotanaka          #+#    #+#             */
+/*   Updated: 2023/07/07 14:42:09 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-double	ft_hypotenus_of_pytgrs(double x, double y)
+int	ft_mes_error(char *message)
 {
-	return (sqrt(pow(x, 2) + pow(y, 2)));
+	write (STDERR_FILENO, message, ft_strlen(message));
+	return (EXIT_FAILURE);
 }
 
-// int main()
-// {
-// 	double	x;
-// 	double	y;
-
-// 	printf("hepotenus of x & y: %f\n", ft_hypotenus_of_pytgrs(sqrt(3),1));
-// }
+int	ft_print_perror(char *original_message)
+{
+	perror(original_message);
+	return (EXIT_FAILURE);
+}

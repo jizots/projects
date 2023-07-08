@@ -6,7 +6,7 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 16:33:41 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/07/04 17:39:42 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/07/08 14:21:51 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,18 +45,6 @@ void	*ft_memchr(const void *s, int c, size_t n)
 		return (NULL);
 	else
 		return ((void *) &str[i]);
-}
-
-size_t	ft_strlen(const char *str)
-{
-	size_t	count;
-
-	if (str == NULL)
-		return (0);
-	count = 0;
-	while (str[count])
-		count++;
-	return (count);
 }
 
 size_t	ft_strlcat(char *dest, const char *src, size_t size)

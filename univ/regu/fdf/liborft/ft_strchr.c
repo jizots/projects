@@ -1,26 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_length_utils.c                                  :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/08 15:10:08 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/07/08 15:10:52 by sotanaka         ###   ########.fr       */
+/*   Created: 2023/05/19 18:05:32 by sotanaka          #+#    #+#             */
+/*   Updated: 2023/07/08 10:42:08 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "liborft.h"
 
-double	ft_hypotenus_of_pytgrs(double x, double y)
+char	*ft_strchr(const char *s, int c)
 {
-	return (sqrt(pow(x, 2) + pow(y, 2)));
+	char	cc;
+
+	cc = (char) c;
+	while (*s)
+	{
+		if (*s == cc)
+			return ((char *) s);
+		s += 1;
+	}
+	if (cc == '\0')
+		return ((char *) s);
+	return (NULL);
 }
 
-// int main()
+// int main(void)
 // {
-// 	double	x;
-// 	double	y;
+//     char str[] = "woi;egjvn;iejfaener32r4";
+//     char c = 'w'; // check \0
 
-// 	printf("hepotenus of x & y: %f\n", ft_hypotenus_of_pytgrs(sqrt(3),1));
+//     printf("std %s\nmy  %s", strchr(str, c + 256), ft_strchr(str, c + 256));
+//     return (0);
 // }

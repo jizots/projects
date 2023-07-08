@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fdf.h                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/07/08 15:00:32 by sotanaka          #+#    #+#             */
+/*   Updated: 2023/07/08 15:01:17 by sotanaka         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef FDF_H
 # define FDF_H
 
@@ -15,21 +27,26 @@
 //define
 
 //typdef
-typedef struct	s_fdf
+typedef struct s_fdf
 {
-	size_t			axis;
-	size_t			ordinate;
 	int				altitude;
 	unsigned int	color;
 	struct s_fdf	*next;
 }	t_fdf;
 
 //prototype
-t_fdf	*ft_get_map(char *filename, t_fdf **list_d);
+int		ft_free_sprit(char **matrix);
+int		ft_free_map(t_fdf **map, const int y);
+t_fdf	**ft_get_map(char *filename, int *x, int *y);
+int		ft_make_mapbase(char *filename, t_fdf ***map_empty, int *x, int *y);
+int		ft_print_perror(char *original_message);
+int		ft_mes_error(char *message);
+char	*get_first_line(int fd);
 char	*get_next_line(int fd);
-char	**ft_split(const char *s, char c);
+size_t	ft_strlen(const char *str);
+size_t	ft_count_word(char *str);
+char	**ft_split_multichar(const char *s, const char *multichar);
 int		ft_atoi(const char *src);
 char	*ft_atoi_base(char *str, char *base, char *baseto);
-void	ft_lstadd_back(t_fdf **lst, t_fdf *new);
 
 #endif

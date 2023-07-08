@@ -1,7 +1,7 @@
 NAME = fdf
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
-SRCS = ft_get_map.c main.c ft_lstadd_back.c
+SRCS = ft_get_map.c main.c ft_make_mapbase.c ft_print_error.c
 OBJS = $(SRCS:%.c=%.o)
 LIBORFT_DIR = liborft
 LIBORFT_STATIC = $(LIBORFT_DIR)/liborft.a

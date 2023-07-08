@@ -1,23 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_get_map.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/07/08 15:09:55 by sotanaka          #+#    #+#             */
+/*   Updated: 2023/07/08 15:30:26 by sotanaka         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
 
-t_fdf	*ft_newlist(size_t axis, size_t ordinate, size_t altitude, unsigned int color)
+int	ft_str_conv_data(char *str, t_fdf **map, int ix, int iy)
 {
-	t_fdf	*newlist;
-
-	newlist = malloc (sizeof(t_fdf) * 1);
-	if (newlist == NULL)
-		return (NULL);
-	newlist->axis = axis;
-	newlist->ordinate = ordinate;
-	newlist->altitude = altitude;
-	newlist->color = color;
-	newlist->next = NULL;
-	return (newlist);
-}
-
-t_fdf	**ft_str_conv_data(char *str, t_fdf **list_d, int ordinate, int axis)
-{
-	t_fdf			*newlist;
 	char			*tmp;
 	unsigned int	color;
 	int				i;
@@ -29,8 +25,8 @@ t_fdf	**ft_str_conv_data(char *str, t_fdf **list_d, int ordinate, int axis)
 		if (str[i] == ',')
 		{
 			tmp = ft_atoi_base(&str[i + 3], "0123456789ABCDEF", "0123456789");
-			if(tmp == NULL)
-				return (NULL);
+			if (tmp == NULL)
+				return (EXIT_FAILURE);
 			color = ft_atoi(tmp);
 			free(tmp);
 			break ;
@@ -38,73 +34,78 @@ t_fdf	**ft_str_conv_data(char *str, t_fdf **list_d, int ordinate, int axis)
 		else
 			i++;
 	}
-	newlist = ft_newlist(axis, ordinate, ft_atoi(str), color);
-	if (newlist == NULL)
-		return (NULL);
-	ft_lstadd_back(list_d, newlist);//一番最後を探すのにめっちゃ時間かかる気がするので、最後の要素を与えて、そこにサクッと追加するのが良さそう。
-	return (list_d);
+	map[iy][ix].altitude = ft_atoi(str);
+	map[iy][ix].color = color;
+	return (EXIT_SUCCESS);
 }
 
-t_fdf	**ft_line_convert_data(char *line, t_fdf **list_d, int ordinate, size_t *size_col)
+int	ft_line_convert_data(char *line, t_fdf **map, const int x, const int y)
 {
+	int		ix;
 	char	**matrix;
-	size_t	axis;
-	size_t	i;
 
-	matrix = ft_split(line, ' ');
+	matrix = ft_split_multichar(line, " \n");
 	if (matrix == NULL)
-		return (NULL);//must free list_d
-	i = 0;
-	if (ordinate == 0)
+		return (ft_free_map(map, y));
+	ix = 0;
+	while (matrix[ix] != NULL)
+		ix++;
+	if (ix != x)
 	{
-		*size_col = 0;
-		while (matrix[i])
-			*size_col = ++i;
+		ft_free_sprit(matrix);
+		return (ft_mes_error("Wrong line existing.\n"));
 	}
-	else
+	ix = 0;
+	while (matrix[ix] != NULL)
 	{
-		while (matrix[i] != NULL)
-			i++;
-		if (*size_col != i)
-		{
-			write(1, "temp mes\n", 9);
-			return (NULL);//must put message.
-		}
+		if (ft_str_conv_data(matrix[ix], map, ix, y) != EXIT_SUCCESS)
+			return (ft_free_sprit(matrix));
+		ix++;
 	}
-	axis = 0;
-	while (matrix[axis] != NULL)
-	{
-		list_d = ft_str_conv_data(matrix[axis], list_d, ordinate, axis);//must error check
-		free(matrix[axis]);
-		axis++;
-	}
-	free(matrix);
-	return (list_d);
+	ft_free_sprit(matrix);
+	return (EXIT_SUCCESS);
 }
 
-t_fdf	*ft_get_map(char *filename, t_fdf **list_d)
+int	ft_get_line(int fd, t_fdf **map, const int *x, const int *y)
 {
-	int		fd;
+	int		iy;
 	char	*line;
-	size_t	ordinate;
-	size_t	size_col;
 
-	fd = open(filename, O_RDONLY);
-	if (fd == -1)
-		return (NULL);
-	ordinate = 0;
-	while (1)
+	iy = 0;
+	while (iy < *y)
 	{
 		line = get_next_line(fd);
 		if (line == NULL)
 			break ;
-		list_d = ft_line_convert_data(line, list_d, ordinate, &size_col);
-		if (*list_d == NULL)
-			return (NULL);
+		if (ft_line_convert_data(line, map, (const int) *x, (const int) iy)
+			!= EXIT_SUCCESS)
+		{
+			ft_free_map(map, *y);
+			return (EXIT_FAILURE);
+		}
 		free(line);
-		ordinate++;
+		iy++;
 	}
-	return (*list_d);
+	if (iy != *y)
+	{
+		ft_free_map(map, *y);
+		return (ft_mes_error("Wrong line existing.\n"));
+	}
+	return (EXIT_SUCCESS);
 }
 
-	//構造体リストの作成がめちゃくちゃ遅い
+t_fdf	**ft_get_map(char *filename, int *x, int *y)
+{
+	int		fd;
+	t_fdf	**map;
+
+	if (ft_make_mapbase(filename, &map, x, y) != 0)
+		return (NULL);
+	fd = open(filename, O_RDONLY);
+	if (fd == -1)
+		return (NULL);
+	if (ft_get_line(fd, map, (const int *)x, (const int *)y) == EXIT_FAILURE)
+		return (NULL);
+	close (fd);
+	return (map);
+}

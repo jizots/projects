@@ -39,3 +39,4 @@ int	main(void)
 }
 
 //cc -I /usr/local/include tes.c -L /usr/local/lib -lmlx -framework OpenGL -framework AppKit
+
