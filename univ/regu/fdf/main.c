@@ -50,6 +50,8 @@ int	main(int ac, char **av)
 	else
 	{
 		map = ft_get_map(av[1], &xsize, &ysize);
+if (map != NULL)
+{
 int x = 0;
 int y = 0;
 while(y < ysize)
@@ -62,8 +64,9 @@ x++;
 }
 y++;
 }
+		ft_free_map(map, ysize);
+}
 	}
-system("leaks -q fdf");
 	return (0);
 }
 

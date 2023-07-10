@@ -12,6 +12,25 @@
 
 #include "liborft.h"
 
+size_t	ft_strlen_base(char *s, char *base)
+{
+	size_t	i;
+	size_t	count;
+
+	i = 0;
+	if (s == NULL || base == NULL)
+		return (0);
+	count = 0;
+	while(s[i])
+	{
+		while (ft_strchr(base, s[i]) == NULL)
+			break ;
+		count++;
+		i++;
+	}
+	return (count);
+}
+
 int	power_lenbase(int lenbase, int power)
 {
 	int	result;
@@ -88,7 +107,7 @@ char	*ft_atoi_base(char *str, char *base, char *baseto)
 	char	*result;
 
 	result = NULL;
-	lenstr = ft_strlen(str);
+	lenstr = ft_strlen_base(str, base);
 	lenbase = ft_strlen(base);
 	power = 0;
 	decimal = 0;
