@@ -16,6 +16,8 @@ char	*ft_strchr(const char *s, int c)
 {
 	char	cc;
 
+	if (s == NULL)
+		return (NULL);
 	cc = (char) c;
 	while (*s)
 	{
@@ -33,7 +35,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	char	*newstr;
 	size_t	len_total;
 
-	if (s1 == NULL || s2 == NULL)
+	if (s1 == NULL && s2 == NULL)
 		return (NULL);
 	len_total = ft_strlen(s1) + ft_strlen(s2);
 	errno = 0;
@@ -52,7 +54,7 @@ size_t	ft_strlcat(char *dest, const char *src, size_t size)
 	size_t	len_s;
 
 	len_s = ft_strlen(src);
-	if (dest == NULL)
+	if (dest == NULL || src == NULL)
 		return (size + len_s);
 	len_d = ft_strlen(dest);
 	if (size <= len_d)
@@ -80,4 +82,13 @@ size_t	ft_strlen(const char *str)
 	while (str[count])
 		count++;
 	return (count);
+}
+
+char	*ft_free(char *s1, char *s2)
+{
+	if (s1 != NULL)
+		free(s1);
+	if (s2 != NULL)
+		free(s2);
+	return (NULL);
 }
