@@ -6,13 +6,13 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 15:09:55 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/07/08 15:30:26 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/07/10 18:39:43 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int	ft_str_conv_data(char *str, t_fdf **map, int ix, int iy)
+static int	ft_str_conv_data(char *str, t_fdf **map, int ix, int iy)
 {
 	char			*tmp;
 	unsigned int	color;
@@ -39,7 +39,7 @@ int	ft_str_conv_data(char *str, t_fdf **map, int ix, int iy)
 	return (EXIT_SUCCESS);
 }
 
-int	ft_line_convert_data(char *line, t_fdf **map, const int x, const int y)
+static int	ft_line_convert_data(char *line, t_fdf **map, const int x, const int y)
 {
 	int		ix;
 	char	**matrix;
@@ -66,7 +66,7 @@ int	ft_line_convert_data(char *line, t_fdf **map, const int x, const int y)
 	return (EXIT_SUCCESS);
 }
 
-int	ft_get_line(int fd, t_fdf **map, const int *x, const int *y)
+static int	ft_get_line(int fd, t_fdf **map, const int *x, const int *y)
 {
 	int		iy;
 	char	*line;
